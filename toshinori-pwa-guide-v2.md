@@ -107,6 +107,33 @@ Para que una PWA sea "instalable" en dispositivos móviles y ordenadores, requie
 
 ---
 
+## 4.1. Conexión Frontend ↔ Backend y Notificaciones por Correo (actualizado)
+
+El sitio estático (`toshinori-morimoto`) y la API (`toshinori-morimoto-api`) son **dos Workers distintos** en Cloudflare. El frontend (`public/app.js`) ya está configurado para apuntar siempre a la URL de producción de la API:
+
+```javascript
+const API_URL = "https://toshinori-morimoto-api.grandfrend-media.workers.dev";
+```
+
+Además, el backend (`toshinori-pwa/src/index.js`) ahora envía una notificación por correo (vía [Resend](https://resend.com), API HTTP gratuita hasta 3.000 correos/mes) cada vez que llega una **pre-inscripción** o un **mensaje de contacto**, además de guardarlos en D1. Para activar el envío de correos, faltan dos pasos manuales que solo se pueden hacer desde la consola de Cloudflare o la terminal (no se pueden automatizar desde el repositorio por seguridad):
+
+1.  Crea una cuenta gratuita en **[resend.com](https://resend.com)** y obtén una API key. Lo ideal es verificar el dominio `toshinorimorimoto.gq` como remitente; mientras tanto puedes usar el remitente de pruebas de Resend.
+2.  Configura la API key como **secreto** del Worker (nunca como variable de texto plano en `wrangler.toml`):
+    ```bash
+    cd toshinori-pwa
+    npx wrangler secret put RESEND_API_KEY
+    ```
+3.  Vuelve a desplegar la API:
+    ```bash
+    npx wrangler deploy
+    ```
+
+Si `RESEND_API_KEY` no está configurada, las inscripciones y mensajes se siguen guardando con normalidad en D1; simplemente no se envía el correo de aviso (el campo `email_sent` en la respuesta de la API lo indica).
+
+El correo de destino se controla con la variable `ADMIN_EMAIL` en `toshinori-pwa/wrangler.toml` (por defecto `guillermonohanikobara@gmail.com`).
+
+---
+
 ## 5. Justificación Técnica de la Arquitectura Seleccionada
 
 Esta arquitectura web moderna ha sido diseñada de forma rigurosa por un experto pensando en las necesidades del **Centro Toshinori Morimoto**:

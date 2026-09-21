@@ -4,8 +4,13 @@ compatibility_date = "2024-03-01"
 
 [vars]
 ENVIRONMENT = "production"
+ADMIN_EMAIL = "guillermonohanikobara@gmail.com"
+FROM_EMAIL = "Centro Toshinori Morimoto <notificaciones@toshinorimorimoto.gq>"
+# RESEND_API_KEY NO va aquí (no se commitea). Se configura como secreto con:
+#   npx wrangler secret put RESEND_API_KEY
+# usando una API key obtenida gratis en https://resend.com
 
 [[d1_databases]]
 binding = "DB"
 database_name = "toshinori_db"
-database_id = "8321aa6c-ae2c-4c0f-aac6-5628ca1795d1" # Reemplazar con el ID obtenido al crear la base de datos D1
+database_id = "8321aa6c-ae2c-4c0f-aac6-5628ca1795d1"
