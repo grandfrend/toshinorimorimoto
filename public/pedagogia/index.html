@@ -25,7 +25,31 @@
 <body class="bg-gray-50 text-gray-800 overflow-x-hidden min-h-screen flex flex-col">
 
     <!-- Toast Container para notificaciones -->
-    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col items-end"></div>
+    <div id="toast-container" class="fixed bottom-24 right-6 z-50 flex flex-col items-end pointer-events-none"></div>
+
+    <!-- Botón Flotante de WhatsApp (Atención Rápida) -->
+    <aside aria-label="Contacto directo por WhatsApp" class="fixed bottom-6 right-6 z-40 flex items-center group">
+        <a id="whatsapp-floating-button" 
+           href="https://wa.me/240222298863?text=Hola,%20solicito%20informaci%C3%B3n%20sobre%20el%20Centro%20Privado%20Toshinori%20Morimoto." 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           aria-label="Chatear por WhatsApp con la administración (+240 222 298 863)"
+           class="relative flex items-center justify-center w-14 h-14 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-emerald-300">
+            <!-- Tooltip accesible -->
+            <span class="absolute right-16 px-3 py-1.5 bg-gray-900 text-white text-xs font-semibold rounded-lg shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none hidden sm:block">
+                ¿Dudas? Escríbenos por WhatsApp
+            </span>
+            <!-- Indicador de disponibilidad -->
+            <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white"></span>
+            </span>
+            <!-- Icono SVG oficial de WhatsApp -->
+            <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12.031 2C6.511 2 2.025 6.486 2.025 12.006c0 1.83.498 3.551 1.364 5.039L2 22.025l5.148-1.349a9.96 9.96 0 004.883 1.27h.004c5.518 0 10.005-4.486 10.005-10.006A9.972 9.972 0 0012.031 2zm0 18.283a8.27 8.27 0 01-4.218-1.153l-.302-.179-3.136.822.837-3.057-.197-.313a8.273 8.273 0 01-1.27-4.397c0-4.577 3.724-8.301 8.305-8.301a8.257 8.257 0 015.877 2.433 8.261 8.261 0 012.433 5.878c0 4.578-3.724 8.302-8.306 8.302zm4.551-6.216c-.249-.125-1.474-.728-1.703-.811-.228-.083-.395-.125-.561.125-.166.249-.644.811-.789.977-.145.166-.291.187-.54.062-.249-.125-1.053-.388-2.006-1.238-.742-.662-1.243-1.48-1.388-1.729-.145-.249-.015-.384.109-.508.112-.111.249-.291.374-.436.125-.145.166-.249.249-.415.083-.166.042-.312-.021-.437-.062-.125-.561-1.35-.769-1.85-.202-.488-.407-.422-.561-.43l-.478-.009c-.166 0-.436.062-.665.312-.228.249-.873.853-.873 2.079 0 1.226.893 2.41 1.018 2.576.125.166 1.758 2.685 4.258 3.764.595.257 1.06.41 1.423.525.598.19 1.142.163 1.572.099.48-.072 1.474-.603 1.682-1.185.207-.582.207-1.08.145-1.185-.062-.104-.228-.166-.477-.291z"/>
+            </svg>
+        </a>
+    </aside>
 
     <!-- Barra de Estado Offline -->
     <div id="connection-status" class="hidden bg-amber-500 text-white text-xs font-semibold py-2 px-4 text-center sticky top-0 z-50 flex items-center justify-center gap-2">

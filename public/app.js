@@ -304,7 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!container) return;
 
     const toast = document.createElement("div");
-    toast.className = `p-4 mb-3 rounded-lg shadow-lg border-l-4 transition-all duration-300 transform translate-y-2 opacity-0 flex items-start gap-3 w-80 md:w-96 ${
+    toast.className = `p-4 mb-3 rounded-lg shadow-lg border-l-4 transition-all duration-300 transform translate-y-2 opacity-0 flex items-start gap-3 w-80 md:w-96 pointer-events-auto ${
       type === "success" ? "bg-white border-green-500 text-gray-800" :
       type === "error" ? "bg-white border-red-500 text-gray-800" :
       "bg-white border-amber-500 text-gray-800"
