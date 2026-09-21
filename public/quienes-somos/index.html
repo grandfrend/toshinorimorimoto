@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiénes Somos | Centro Privado Toshinori Morimoto - Baney</title>
+    <meta name="description" content="Conozca la historia, misión, valores y homologación ministerial del Centro Privado de Educación Infantil Toshinori Morimoto en Baney.">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#e11d48">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Nunito', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 overflow-x-hidden min-h-screen flex flex-col">
+
+    <!-- Toast Container para notificaciones -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col items-end"></div>
+
+    <!-- Barra de Estado Offline -->
+    <div id="connection-status" class="hidden bg-amber-500 text-white text-xs font-semibold py-2 px-4 text-center sticky top-0 z-50 flex items-center justify-center gap-2">
+        <i data-lucide="wifi-off" class="w-4 h-4"></i>
+        <span>Estás navegando sin conexión. Los datos del formulario se guardarán localmente y se sincronizarán al recuperar internet.</span>
+    </div>
+
+    <!-- Barra de Sincronización activa -->
+    <div id="sync-status" class="hidden bg-emerald-600 text-white text-xs font-semibold py-2 px-4 text-center sticky top-0 z-50 flex items-center justify-center gap-2">
+        <i data-lucide="refresh-cw" class="w-4 h-4 animate-spin"></i>
+        <span>Sincronizando registros guardados con el servidor de Cloudflare...</span>
+    </div>
+
+    <!-- HEADER & NAVEGACIÓN -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logotipo -->
+                <a href="/" class="flex items-center gap-3">
+                    <div class="bg-rose-600 text-white p-2.5 rounded-xl shadow-md">
+                        <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl md:text-2xl font-extrabold text-rose-600 block leading-tight tracking-tight">TOSHINORI MORIMOTO</span>
+                        <span class="text-xs text-gray-500 font-medium tracking-widest block uppercase">Centro Privado - Baney</span>
+                    </div>
+                </a>
+
+                <!-- Menú Escritorio -->
+                <nav class="hidden lg:flex items-center gap-6">
+                    <a href="/" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Inicio</a>
+                    <a href="/quienes-somos" class="text-rose-600 font-bold text-sm transition-colors">Quiénes Somos</a>
+                    <a href="/pedagogia" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Pedagogía</a>
+                    <a href="/admisiones" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Admisiones y Costos</a>
+                    <a href="/contacto" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Contacto</a>
+                    <a href="/admisiones" class="bg-rose-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:bg-rose-700 transition-colors">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
+                </nav>
+
+                <!-- Botón Menú Móvil -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-600 hover:text-rose-600 focus:outline-none">
+                    <i id="menu-icon" data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-inner">
+            <a href="/" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inicio</a>
+            <a href="/quienes-somos" class="block text-rose-600 font-bold py-2">Quiénes Somos</a>
+            <a href="/pedagogia" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Propuesta Pedagógica</a>
+            <a href="/admisiones" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inscripción y Costos</a>
+            <a href="/contacto" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Contacto</a>
+            <a href="/admisiones" class="block bg-rose-600 text-white text-center px-4 py-3 rounded-xl font-bold shadow-md hover:bg-rose-700">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
+        </div>
+    </header>
+
+    <!-- BREADCRUMB & HERO -->
+    <div class="bg-gradient-to-r from-rose-50 via-white to-rose-50 border-b border-gray-200 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center gap-2 text-xs text-gray-500 mb-4" aria-label="Breadcrumb">
+                <a href="/" class="hover:text-rose-600 transition-colors">Inicio</a>
+                <span class="text-gray-400">/</span>
+                <span class="text-rose-600 font-semibold">Quiénes Somos</span>
+            </nav>
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 bg-rose-100 text-rose-700 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                    <span>Identidad y Homologación Oficial</span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+                    Nuestra Identidad Institucional
+                </h1>
+                <p class="mt-3 text-base sm:text-lg text-gray-600">
+                    Desde el año 2011, formamos las bases afectivas, cognitivas y sociales de los niños y niñas de Baney con vocación pedagógica rigurosa y calidez humana.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+            
+            <!-- Reseña y Registro Ministerial -->
+            <section id="autorizacion-legal" class="bg-white rounded-3xl p-8 md:p-12 border border-gray-200 shadow-sm">
+                <div class="grid lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-8 space-y-4">
+                        <span class="text-rose-600 font-bold uppercase tracking-wider text-xs">Respaldo Normativo</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Autorización Oficial del Ministerio de Educación</h2>
+                        <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+                            El <strong>Centro Privado Toshinori Morimoto</strong> fue fundado formalmente en el año 2011 en la localidad de Baney, Isla de Bioko (Guinea Ecuatorial). Opera con reconocimiento y autorización legal expresa mediante el <strong>Despacho Oficial nº 016-017-146</strong> expedido por la Dirección General de Planificación Educativa.
+                        </p>
+                        <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+                            Este aval gubernamental certifica que nuestras instalaciones, programas pedagógicos de educación inicial y perfiles docentes cumplen con los estándares vigentes de seguridad, higiene y calidad curricular para la atención de la primera infancia (de 3 meses a 5 años).
+                        </p>
+                    </div>
+                    <div class="lg:col-span-4 bg-rose-50/70 p-6 rounded-2xl border border-rose-100 space-y-4">
+                        <div class="flex items-center gap-3 text-rose-700">
+                            <i data-lucide="file-check-2" class="w-8 h-8"></i>
+                            <div>
+                                <span class="text-xs uppercase font-bold tracking-wider block text-gray-500">Expediente Ministerial</span>
+                                <span class="font-extrabold text-gray-900 text-sm">Nº 016-017-146</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 text-rose-700">
+                            <i data-lucide="calendar" class="w-8 h-8"></i>
+                            <div>
+                                <span class="text-xs uppercase font-bold tracking-wider block text-gray-500">Año de Fundación</span>
+                                <span class="font-extrabold text-gray-900 text-sm">2011 (15 años de servicio)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 text-rose-700">
+                            <i data-lucide="map-pin" class="w-8 h-8"></i>
+                            <div>
+                                <span class="text-xs uppercase font-bold tracking-wider block text-gray-500">Jurisdicción</span>
+                                <span class="font-extrabold text-gray-900 text-sm">Distrito de Baney, Bioko</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Misión, Visión y Valores -->
+            <section id="mision-vision-valores" class="grid md:grid-cols-3 gap-8">
+                <!-- Misión -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+                    <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="target" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900">Nuestra Misión</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Proveer una educación inicial integral y amorosa en un entorno seguro, estructurado y estimulante, permitiendo que cada niño desarrolle plenamente sus capacidades motrices, cognitivas, emocionales y de convivencia social.
+                    </p>
+                </div>
+
+                <!-- Visión -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="compass" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900">Nuestra Visión</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Ser el centro infantil de referencia comunitaria en Baney y en la región insular, reconocido por su excelencia metodológica en la primera infancia, la calidez de su comunidad y la sólida formación en valores éticos universales.
+                    </p>
+                </div>
+
+                <!-- Valores -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="award" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900">Valores Fundamentales</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li class="flex items-center gap-2"><span class="w-2 h-2 bg-amber-500 rounded-full"></span><span><strong>Seguridad Afectiva:</strong> Protección y cariño constante.</span></li>
+                        <li class="flex items-center gap-2"><span class="w-2 h-2 bg-amber-500 rounded-full"></span><span><strong>Respeto al Ritmo:</strong> Cada niño es único.</span></li>
+                        <li class="flex items-center gap-2"><span class="w-2 h-2 bg-amber-500 rounded-full"></span><span><strong>Disciplina Positiva:</strong> Límites claros con empatía.</span></li>
+                        <li class="flex items-center gap-2"><span class="w-2 h-2 bg-amber-500 rounded-full"></span><span><strong>Alianza Familiar:</strong> Comunicación abierta con los padres.</span></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Instalaciones y Seguridad -->
+            <section id="instalaciones" class="bg-white rounded-3xl p-8 md:p-12 border border-gray-200 shadow-sm">
+                <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                    <span class="text-rose-600 font-bold uppercase tracking-wider text-xs">Entorno Adaptado</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Instalaciones Diseñadas para la Infancia</h2>
+                    <p class="text-gray-600 text-sm">Cada rincón de nuestro centro en Baney ha sido acondicionado para garantizar una experiencia pedagógica segura y placentera.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 space-y-3">
+                        <div class="bg-rose-100 text-rose-600 p-3 rounded-xl w-fit"><i data-lucide="home" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-gray-900 text-base">Aulas Climatizadas</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Espacios luminosos y ventilados, con mobiliario ergonómico a la altura de los pequeños para incentivar su autonomía.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 space-y-3">
+                        <div class="bg-blue-100 text-blue-600 p-3 rounded-xl w-fit"><i data-lucide="gamepad-2" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-gray-900 text-base">Área de Juegos Seguros</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Superficies acolchadas y protecciones anti-impacto donde los niños ejercitan su psicomotricidad de manera protegida.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 space-y-3">
+                        <div class="bg-amber-100 text-amber-600 p-3 rounded-xl w-fit"><i data-lucide="moon" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-gray-900 text-base">Zona de Descanso Maternal</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Área tranquila y libre de ruidos para bebés y párvulos (desde 3 meses), bajo supervisión continua de asistentes.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 space-y-3">
+                        <div class="bg-emerald-100 text-emerald-600 p-3 rounded-xl w-fit"><i data-lucide="shield" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-gray-900 text-base">Acceso Controlado</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Protocolo estricto de entrada y salida con verificación de tutores legales autorizados y multas por retrasos.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Llamada a la Acción -->
+            <section class="bg-gradient-to-r from-rose-600 to-rose-700 text-white rounded-3xl p-8 md:p-12 shadow-xl flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="space-y-3 text-center md:text-left">
+                    <h3 class="text-2xl md:text-3xl font-bold">¿Deseas conocer más sobre nuestras admisiones?</h3>
+                    <p class="text-rose-100 text-sm max-w-xl">Las plazas para el ciclo <span class="dynamic-cycle">2026-2027</span> están abiertas para los turnos de mañana, tarde y jornada completa.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                    <a href="/admisiones" class="bg-white text-rose-700 px-6 py-3.5 rounded-xl font-bold text-sm text-center shadow-md hover:bg-rose-50 transition-colors">
+                        Ver Costos y Pre-inscribir
+                    </a>
+                    <a href="/contacto" class="border border-white/40 text-white px-6 py-3.5 rounded-xl font-bold text-sm text-center hover:bg-white/10 transition-colors">
+                        Contactar Secretaría
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="bg-rose-600 p-2 rounded-xl text-white">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-sm font-extrabold text-rose-500 block leading-tight uppercase tracking-wide">Toshinori Morimoto</span>
+                    <span class="text-[10px] text-gray-400 font-medium block">Centro Privado de Educación Infantil</span>
+                </div>
+            </div>
+            <div class="text-center md:text-right text-xs text-gray-400 space-y-2">
+                <p>Ubicación: Av. de la Independencia, s/n, Baney, Guinea Ecuatorial</p>
+                <p>Registro Ministerial: Despacho nº 016-017-146 (Dirección General de Planificación Educativa)</p>
+                <p>Derechos Reservados © <span class="dynamic-current-year">2026</span> Centro Privado Toshinori Morimoto.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

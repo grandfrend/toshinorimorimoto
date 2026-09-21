@@ -1,0 +1,22 @@
+{
+  "name": "Centro Privado Toshinori Morimoto",
+  "short_name": "Toshinori Morimoto",
+  "description": "PWA para el Centro de Educación Infantil Toshinori Morimoto de Baney",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e11d48",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

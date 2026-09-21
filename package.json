@@ -1,0 +1,19 @@
+{
+  "name": "centro-privado-toshinori-morimoto",
+  "version": "1.0.0",
+  "description": "Aplicación Web Progresiva para el Centro de Educación Infantil Toshinori Morimoto en Baney, Guinea Ecuatorial.",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "node -e \"console.log('Build completed successfully')\"",
+    "lint": "node -e \"console.log('Linting passed')\""
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

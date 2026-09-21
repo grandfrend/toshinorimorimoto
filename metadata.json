@@ -1,0 +1,6 @@
+{
+  "name": "Centro Privado Toshinori Morimoto",
+  "description": "Aplicación Web Progresiva (PWA) para el Centro Privado de Educación Infantil Toshinori Morimoto en Baney, Guinea Ecuatorial.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

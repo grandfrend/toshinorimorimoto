@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto y Ubicación | Centro Privado Toshinori Morimoto - Baney</title>
+    <meta name="description" content="Comuníquese con la secretaría del Centro Toshinori Morimoto en Baney. Teléfonos de atención, correo electrónico y formulario de contacto directo.">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#e11d48">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Nunito', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 overflow-x-hidden min-h-screen flex flex-col">
+
+    <!-- Toast Container para notificaciones -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col items-end"></div>
+
+    <!-- Barra de Estado Offline -->
+    <div id="connection-status" class="hidden bg-amber-500 text-white text-xs font-semibold py-2 px-4 text-center sticky top-0 z-50 flex items-center justify-center gap-2">
+        <i data-lucide="wifi-off" class="w-4 h-4"></i>
+        <span>Estás navegando sin conexión. Los mensajes se guardarán localmente y se enviarán al recuperar internet.</span>
+    </div>
+
+    <!-- Barra de Sincronización activa -->
+    <div id="sync-status" class="hidden bg-emerald-600 text-white text-xs font-semibold py-2 px-4 text-center sticky top-0 z-50 flex items-center justify-center gap-2">
+        <i data-lucide="refresh-cw" class="w-4 h-4 animate-spin"></i>
+        <span>Sincronizando registros con el servidor de Cloudflare...</span>
+    </div>
+
+    <!-- HEADER & NAVEGACIÓN -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logotipo -->
+                <a href="/" class="flex items-center gap-3">
+                    <div class="bg-rose-600 text-white p-2.5 rounded-xl shadow-md">
+                        <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl md:text-2xl font-extrabold text-rose-600 block leading-tight tracking-tight">TOSHINORI MORIMOTO</span>
+                        <span class="text-xs text-gray-500 font-medium tracking-widest block uppercase">Centro Privado - Baney</span>
+                    </div>
+                </a>
+
+                <!-- Menú Escritorio -->
+                <nav class="hidden lg:flex items-center gap-6">
+                    <a href="/" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Inicio</a>
+                    <a href="/quienes-somos" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Quiénes Somos</a>
+                    <a href="/pedagogia" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Pedagogía</a>
+                    <a href="/admisiones" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Admisiones y Costos</a>
+                    <a href="/contacto" class="text-rose-600 font-bold text-sm transition-colors">Contacto</a>
+                    <a href="/admisiones" class="bg-rose-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:bg-rose-700 transition-colors">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
+                </nav>
+
+                <!-- Botón Menú Móvil -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-600 hover:text-rose-600 focus:outline-none">
+                    <i id="menu-icon" data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-inner">
+            <a href="/" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inicio</a>
+            <a href="/quienes-somos" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Quiénes Somos</a>
+            <a href="/pedagogia" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Propuesta Pedagógica</a>
+            <a href="/admisiones" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inscripción y Costos</a>
+            <a href="/contacto" class="block text-rose-600 font-bold py-2">Contacto</a>
+            <a href="/admisiones" class="block bg-rose-600 text-white text-center px-4 py-3 rounded-xl font-bold shadow-md hover:bg-rose-700">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
+        </div>
+    </header>
+
+    <!-- BREADCRUMB & HERO -->
+    <div class="bg-gradient-to-r from-rose-50 via-white to-rose-50 border-b border-gray-200 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center gap-2 text-xs text-gray-500 mb-4" aria-label="Breadcrumb">
+                <a href="/" class="hover:text-rose-600 transition-colors">Inicio</a>
+                <span class="text-gray-400">/</span>
+                <span class="text-rose-600 font-semibold">Contacto</span>
+            </nav>
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 bg-rose-100 text-rose-700 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                    <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+                    <span>Atención a Familias y Tutores</span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+                    Contacto y Canales de Atención
+                </h1>
+                <p class="mt-3 text-base sm:text-lg text-gray-600">
+                    Estamos a su disposición para resolver dudas sobre el proceso de matrícula, visitas guiadas a las instalaciones o coordinación pedagógica.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+
+            <!-- Canales y Formulario -->
+            <div class="grid lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Información de Contacto Directo -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <span class="text-rose-600 font-bold uppercase tracking-wider text-xs">Vías de Comunicación</span>
+                        <h2 class="text-2xl font-bold text-gray-900 mt-1">Visítenos o Llámenos</h2>
+                        <p class="text-sm text-gray-600 mt-2">Nuestra secretaría académica atiende consultas presenciales y telefónicas durante todo el año escolar.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Ubicación -->
+                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-start gap-4">
+                            <div class="bg-rose-100 text-rose-600 p-3 rounded-xl"><i data-lucide="map-pin" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">Dirección Física</h4>
+                                <p class="text-xs text-gray-600 mt-1">Av. de la Independencia, s/n</p>
+                                <p class="text-xs text-gray-500">Baney, Isla de Bioko, Guinea Ecuatorial</p>
+                            </div>
+                        </div>
+
+                        <!-- Teléfonos -->
+                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-start gap-4">
+                            <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="phone" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">Teléfonos de Atención</h4>
+                                <p class="text-xs text-gray-600 mt-1">Secretaría: <strong>+240 222 298 863</strong></p>
+                                <p class="text-xs text-gray-500">Coordinación: <strong>+240 555 123 456</strong></p>
+                            </div>
+                        </div>
+
+                        <!-- Correo Electrónico -->
+                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-start gap-4">
+                            <div class="bg-amber-100 text-amber-600 p-3 rounded-xl"><i data-lucide="mail" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">Correo Electrónico</h4>
+                                <p class="text-xs text-gray-600 mt-1">secretaria@toshinorimorimoto.gq</p>
+                                <p class="text-xs text-gray-500">direccion@toshinorimorimoto.gq</p>
+                            </div>
+                        </div>
+
+                        <!-- Horarios -->
+                        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex items-start gap-4">
+                            <div class="bg-emerald-100 text-emerald-600 p-3 rounded-xl"><i data-lucide="clock" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">Horario de Secretaría</h4>
+                                <p class="text-xs text-gray-600 mt-1">Lunes a Viernes: 07:30H - 18:30H</p>
+                                <p class="text-xs text-gray-500">Sábados: 09:00H - 13:00H (Atención previa cita)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario de Consulta Directa -->
+                <div class="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-12 border border-gray-200 shadow-xl">
+                    <div class="mb-8">
+                        <span class="inline-block bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">Mensajería Directa</span>
+                        <h3 class="text-2xl font-extrabold text-gray-900">Envíenos su Consulta</h3>
+                        <p class="text-xs sm:text-sm text-gray-500 mt-2">Le responderemos a la mayor brevedad a través de su número telefónico o correo electrónico.</p>
+                    </div>
+
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="contact_name" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Su Nombre y Apellidos *</label>
+                                <input type="text" id="contact_name" required placeholder="Ej. Teresa Mangue" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm">
+                            </div>
+                            <div>
+                                <label for="contact_phone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Teléfono de Contacto *</label>
+                                <input type="tel" id="contact_phone" required placeholder="Ej. 222 298 863" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="contact_email" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Correo Electrónico (Opcional)</label>
+                            <input type="email" id="contact_email" placeholder="su-correo@ejemplo.com" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm">
+                        </div>
+
+                        <div>
+                            <label for="contact_subject" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Motivo de Consulta *</label>
+                            <select id="contact_subject" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm">
+                                <option value="admisiones">Información de Matrículas e Inscripción</option>
+                                <option value="visita">Solicitud de Visita al Centro</option>
+                                <option value="pedagogico">Duda sobre la Propuesta Pedagógica</option>
+                                <option value="otro">Otro Asunto</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="contact_message" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Mensaje o Detalle *</label>
+                            <textarea id="contact_message" rows="4" required placeholder="Escriba aquí su mensaje..." class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm"></textarea>
+                        </div>
+
+                        <button type="submit" id="btn-submit-contact" class="w-full bg-rose-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg hover:bg-rose-700 transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            <span>Enviar Mensaje a Secretaría</span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="bg-rose-600 p-2 rounded-xl text-white">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-sm font-extrabold text-rose-500 block leading-tight uppercase tracking-wide">Toshinori Morimoto</span>
+                    <span class="text-[10px] text-gray-400 font-medium block">Centro Privado de Educación Infantil</span>
+                </div>
+            </div>
+            <div class="text-center md:text-right text-xs text-gray-400 space-y-2">
+                <p>Ubicación: Av. de la Independencia, s/n, Baney, Guinea Ecuatorial</p>
+                <p>Registro Ministerial: Despacho nº 016-017-146 (Dirección General de Planificación Educativa)</p>
+                <p>Derechos Reservados © <span class="dynamic-current-year">2026</span> Centro Privado Toshinori Morimoto.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

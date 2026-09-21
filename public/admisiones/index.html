@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admisiones y Costos | Centro Privado Toshinori Morimoto - Baney</title>
+    <meta name="description" content="Tarifas oficiales, requisitos de matrícula y formulario de pre-inscripción en línea para el Centro Toshinori Morimoto en Baney.">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#e11d48">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Nunito', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 overflow-x-hidden min-h-screen flex flex-col">
+
+    <!-- Toast Container para notificaciones -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col items-end"></div>
+
+    <!-- Barra de Estado Offline -->
+    <div id="connection-status" class="hidden bg-amber-500 text-white text-xs font-semibold py-2 px-4 text-center sticky top-0 z-50 flex items-center justify-center gap-2">
+        <i data-lucide="wifi-off" class="w-4 h-4"></i>
+        <span>Estás navegando sin conexión. Los datos del formulario se guardarán localmente y se sincronizarán al recuperar internet.</span>
+    </div>
+
+    <!-- Barra de Sincronización activa -->
+    <div id="sync-status" class="hidden bg-emerald-600 text-white text-xs font-semibold py-2 px-4 text-center sticky top-0 z-50 flex items-center justify-center gap-2">
+        <i data-lucide="refresh-cw" class="w-4 h-4 animate-spin"></i>
+        <span>Sincronizando registros guardados con el servidor de Cloudflare...</span>
+    </div>
+
+    <!-- HEADER & NAVEGACIÓN -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logotipo -->
+                <a href="/" class="flex items-center gap-3">
+                    <div class="bg-rose-600 text-white p-2.5 rounded-xl shadow-md">
+                        <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl md:text-2xl font-extrabold text-rose-600 block leading-tight tracking-tight">TOSHINORI MORIMOTO</span>
+                        <span class="text-xs text-gray-500 font-medium tracking-widest block uppercase">Centro Privado - Baney</span>
+                    </div>
+                </a>
+
+                <!-- Menú Escritorio -->
+                <nav class="hidden lg:flex items-center gap-6">
+                    <a href="/" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Inicio</a>
+                    <a href="/quienes-somos" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Quiénes Somos</a>
+                    <a href="/pedagogia" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Pedagogía</a>
+                    <a href="/admisiones" class="text-rose-600 font-bold text-sm transition-colors">Admisiones y Costos</a>
+                    <a href="/contacto" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Contacto</a>
+                    <a href="/admisiones" class="bg-rose-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:bg-rose-700 transition-colors">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
+                </nav>
+
+                <!-- Botón Menú Móvil -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-600 hover:text-rose-600 focus:outline-none">
+                    <i id="menu-icon" data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-inner">
+            <a href="/" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inicio</a>
+            <a href="/quienes-somos" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Quiénes Somos</a>
+            <a href="/pedagogia" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Propuesta Pedagógica</a>
+            <a href="/admisiones" class="block text-rose-600 font-bold py-2">Inscripción y Costos</a>
+            <a href="/contacto" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Contacto</a>
+            <a href="/admisiones" class="block bg-rose-600 text-white text-center px-4 py-3 rounded-xl font-bold shadow-md hover:bg-rose-700">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
+        </div>
+    </header>
+
+    <!-- BREADCRUMB & HERO -->
+    <div class="bg-gradient-to-r from-rose-50 via-white to-rose-50 border-b border-gray-200 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center gap-2 text-xs text-gray-500 mb-4" aria-label="Breadcrumb">
+                <a href="/" class="hover:text-rose-600 transition-colors">Inicio</a>
+                <span class="text-gray-400">/</span>
+                <span class="text-rose-600 font-semibold">Admisiones y Costos</span>
+            </nav>
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 bg-rose-100 text-rose-700 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                    <i data-lucide="wallet" class="w-3.5 h-3.5"></i>
+                    <span>Ciclo Escolar Dinámico <span class="dynamic-cycle">2026-2027</span></span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+                    Admisiones, Tarifas y Pre-inscripción
+                </h1>
+                <p class="mt-3 text-base sm:text-lg text-gray-600">
+                    Transparencia absoluta en nuestras cuotas y un proceso ágil para garantizar la vacante escolar de su hijo/a en Baney.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+
+            <!-- Bloques Informativos: Requisitos, Tarifas y Normas -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <!-- Requisitos de Inscripción -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-rose-100 text-rose-600 p-3 rounded-2xl"><i data-lucide="file-check-2" class="w-6 h-6"></i></div>
+                        <div>
+                            <span class="text-xs uppercase font-bold text-gray-400 tracking-wider">Documentación</span>
+                            <h3 class="text-lg font-bold text-gray-900">Requisitos Obligatorios</h3>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 text-sm text-gray-700">
+                        <li class="flex items-start gap-3">
+                            <span class="text-rose-600 font-bold mt-0.5">✓</span>
+                            <span>Fotocopia legible del Certificado de Nacimiento del menor.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-rose-600 font-bold mt-0.5">✓</span>
+                            <span>1 fotografía reciente en color, tamaño carnet.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-rose-600 font-bold mt-0.5">✓</span>
+                            <span>Fotocopia del Documento de Identidad (DIP/Pasaporte) del tutor.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-rose-600 font-bold mt-0.5">✓</span>
+                            <span>Abono inicial del 50% de la matrícula anual como reserva.</span>
+                        </li>
+                    </ul>
+                    <div class="p-4 bg-rose-50 rounded-2xl border border-rose-100 text-xs text-rose-800 leading-relaxed">
+                        <strong>Nota de Secretaría:</strong> La reserva formal se ratifica físicamente al consignar los documentos originales en el centro.
+                    </div>
+                </div>
+
+                <!-- Tarifas y Turnos Oficiales -->
+                <div class="bg-rose-50/60 p-8 rounded-3xl border border-rose-200 shadow-sm space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-rose-600 text-white p-3 rounded-2xl"><i data-lucide="tag" class="w-6 h-6"></i></div>
+                        <div>
+                            <span class="text-xs uppercase font-bold text-rose-500 tracking-wider">Precios Oficiales</span>
+                            <h3 class="text-lg font-bold text-gray-900">Cuotas y Mensualidades</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-white p-4 rounded-xl flex justify-between items-center shadow-xs">
+                            <span class="font-semibold text-gray-700 text-sm">Matrícula Anual</span>
+                            <span class="text-rose-600 font-extrabold text-base">30.000 FCFA</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl flex justify-between items-center shadow-xs">
+                            <span class="font-semibold text-gray-700 text-sm">Uniforme Escolar Completo</span>
+                            <span class="text-rose-600 font-extrabold text-base">8.000 FCFA</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 space-y-2 text-xs md:text-sm">
+                        <h4 class="font-bold text-gray-900 text-xs uppercase tracking-wider text-rose-700">Turnos Disponibles:</h4>
+                        <div class="flex justify-between border-b border-rose-200/60 pb-2">
+                            <span>Mañana (08:00H - 13:00H)</span>
+                            <span class="font-bold text-gray-900">30.000 XAF/mes</span>
+                        </div>
+                        <div class="flex justify-between border-b border-rose-200/60 pb-2">
+                            <span>Tarde (13:00H - 18:00H)</span>
+                            <span class="font-bold text-gray-900">30.000 XAF/mes</span>
+                        </div>
+                        <div class="flex justify-between pb-1">
+                            <span>Completo (08:00H - 18:00H)</span>
+                            <span class="font-bold text-gray-900">60.000 XAF/mes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Horarios y Normativa de Convivencia -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-amber-100 text-amber-600 p-3 rounded-2xl"><i data-lucide="clock" class="w-6 h-6"></i></div>
+                        <div>
+                            <span class="text-xs uppercase font-bold text-gray-400 tracking-wider">Reglamento</span>
+                            <h3 class="text-lg font-bold text-gray-900">Horarios y Normativa</h3>
+                        </div>
+                    </div>
+                    <div class="space-y-3.5 text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        <p><strong>Puntualidad:</strong> Puertas abiertas desde las 07:45H. Formación a las 08:00H e inicio de actividades pedagógicas a las 08:15H.</p>
+                        <p><strong>Recogida de niños:</strong> Turno mañana hasta las 13:00H; turno tarde hasta las 18:00H. Se aplica un <strong>recargo de 1.000 FCFA</strong> en caso de retrasos no avisados.</p>
+                        <p><strong>Meriendas Saludables:</strong> Se promueve la fruta y cereales. Quedan expresamente <strong>prohibidos refrescos gaseosos y golosinas</strong>.</p>
+                        <p><strong>Código de Uniforme:</strong> Lunes a jueves uniforme oficial; los viernes chándal deportivo escolar.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Formulario de Pre-inscripción en Línea (Con soporte Offline) -->
+            <section id="formulario-registro" class="bg-white rounded-3xl p-8 sm:p-12 border border-gray-200 shadow-xl max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <span class="inline-block bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">Trámite Inmediato</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900">Formulario de Pre-inscripción</h2>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2">Diligencia la información del menor y del tutor legal para reservar plaza en el ciclo escolar <span class="dynamic-cycle">2026-2027</span>.</p>
+                </div>
+
+                <form id="enroll-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="student_name" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nombre Completo del Niño/a *</label>
+                            <input type="text" id="student_name" required placeholder="Ej. Guillermo Noha" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm">
+                        </div>
+                        <div>
+                            <label for="birth_date" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Fecha de Nacimiento *</label>
+                            <input type="date" id="birth_date" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="tutor_name" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nombre del Tutor Legal *</label>
+                            <input type="text" id="tutor_name" required placeholder="Nombre y Apellidos del Tutor" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm">
+                        </div>
+                        <div>
+                            <label for="tutor_phone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Teléfono de Contacto *</label>
+                            <input type="tel" id="tutor_phone" required placeholder="Ej. 222 298 863" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="tutor_email" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Correo Electrónico (Opcional)</label>
+                            <input type="email" id="tutor_email" placeholder="ejemplo@gmail.com" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm">
+                        </div>
+                        <div>
+                            <label for="shift" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Turno Escolar Solicitado *</label>
+                            <select id="shift" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm">
+                                <option value="mañana">Turno Mañana (08:00 - 13:00) - 30.000 FCFA/mes</option>
+                                <option value="tarde">Turno Tarde (13:00 - 18:00) - 30.000 FCFA/mes</option>
+                                <option value="completo">Turno Completo (08:00 - 18:00) - 60.000 FCFA/mes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-2">
+                        <button type="submit" id="btn-submit-enroll" class="w-full sm:w-auto bg-rose-600 text-white px-10 py-4 rounded-xl font-bold shadow-lg hover:bg-rose-700 transition-colors flex items-center justify-center gap-2 mx-auto">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            <span>Enviar Solicitud de Pre-inscripción</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="bg-rose-600 p-2 rounded-xl text-white">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-sm font-extrabold text-rose-500 block leading-tight uppercase tracking-wide">Toshinori Morimoto</span>
+                    <span class="text-[10px] text-gray-400 font-medium block">Centro Privado de Educación Infantil</span>
+                </div>
+            </div>
+            <div class="text-center md:text-right text-xs text-gray-400 space-y-2">
+                <p>Ubicación: Av. de la Independencia, s/n, Baney, Guinea Ecuatorial</p>
+                <p>Registro Ministerial: Despacho nº 016-017-146 (Dirección General de Planificación Educativa)</p>
+                <p>Derechos Reservados © <span class="dynamic-current-year">2026</span> Centro Privado Toshinori Morimoto.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

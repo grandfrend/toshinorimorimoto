@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Pedagógica | Centro Privado Toshinori Morimoto - Baney</title>
+    <meta name="description" content="Descubra nuestro modelo pedagógico lúdico, las 6 áreas de desarrollo infantil y el calendario escolar del Centro Toshinori Morimoto.">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#e11d48">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Nunito', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 overflow-x-hidden min-h-screen flex flex-col">
+
+    <!-- Toast Container para notificaciones -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col items-end"></div>
+
+    <!-- Barra de Estado Offline -->
+    <div id="connection-status" class="hidden bg-amber-500 text-white text-xs font-semibold py-2 px-4 text-center sticky top-0 z-50 flex items-center justify-center gap-2">
+        <i data-lucide="wifi-off" class="w-4 h-4"></i>
+        <span>Estás navegando sin conexión. Los datos del formulario se guardarán localmente y se sincronizarán al recuperar internet.</span>
+    </div>
+
+    <!-- Barra de Sincronización activa -->
+    <div id="sync-status" class="hidden bg-emerald-600 text-white text-xs font-semibold py-2 px-4 text-center sticky top-0 z-50 flex items-center justify-center gap-2">
+        <i data-lucide="refresh-cw" class="w-4 h-4 animate-spin"></i>
+        <span>Sincronizando registros guardados con el servidor de Cloudflare...</span>
+    </div>
+
+    <!-- HEADER & NAVEGACIÓN -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logotipo -->
+                <a href="/" class="flex items-center gap-3">
+                    <div class="bg-rose-600 text-white p-2.5 rounded-xl shadow-md">
+                        <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl md:text-2xl font-extrabold text-rose-600 block leading-tight tracking-tight">TOSHINORI MORIMOTO</span>
+                        <span class="text-xs text-gray-500 font-medium tracking-widest block uppercase">Centro Privado - Baney</span>
+                    </div>
+                </a>
+
+                <!-- Menú Escritorio -->
+                <nav class="hidden lg:flex items-center gap-6">
+                    <a href="/" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Inicio</a>
+                    <a href="/quienes-somos" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Quiénes Somos</a>
+                    <a href="/pedagogia" class="text-rose-600 font-bold text-sm transition-colors">Pedagogía</a>
+                    <a href="/admisiones" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Admisiones y Costos</a>
+                    <a href="/contacto" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Contacto</a>
+                    <a href="/admisiones" class="bg-rose-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:bg-rose-700 transition-colors">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
+                </nav>
+
+                <!-- Botón Menú Móvil -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-600 hover:text-rose-600 focus:outline-none">
+                    <i id="menu-icon" data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-inner">
+            <a href="/" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inicio</a>
+            <a href="/quienes-somos" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Quiénes Somos</a>
+            <a href="/pedagogia" class="block text-rose-600 font-bold py-2">Propuesta Pedagógica</a>
+            <a href="/admisiones" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inscripción y Costos</a>
+            <a href="/contacto" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Contacto</a>
+            <a href="/admisiones" class="block bg-rose-600 text-white text-center px-4 py-3 rounded-xl font-bold shadow-md hover:bg-rose-700">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
+        </div>
+    </header>
+
+    <!-- BREADCRUMB & HERO -->
+    <div class="bg-gradient-to-r from-rose-50 via-white to-rose-50 border-b border-gray-200 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center gap-2 text-xs text-gray-500 mb-4" aria-label="Breadcrumb">
+                <a href="/" class="hover:text-rose-600 transition-colors">Inicio</a>
+                <span class="text-gray-400">/</span>
+                <span class="text-rose-600 font-semibold">Pedagogía</span>
+            </nav>
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 bg-rose-100 text-rose-700 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                    <span>Metodología Activa y Estimulación Temprana</span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+                    Propuesta Pedagógica y Ciclo Escolar
+                </h1>
+                <p class="mt-3 text-base sm:text-lg text-gray-600">
+                    Consideramos la educación inicial como la etapa clave del neurodesarrollo. Aplicamos el juego guiado y el afecto como motores centrales del aprendizaje.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+
+            <!-- Principios Pedagógicos Clave -->
+            <section id="principios" class="space-y-8">
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <span class="text-rose-600 font-bold uppercase tracking-wider text-xs">Bases Teóricas</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Nuestros 5 Principios Pedagógicos</h2>
+                    <p class="text-gray-600 text-sm">Estructura curricular fundamentada en la neuroeducación infantil y el respeto a la singularidad de cada niño.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-3 hover:border-rose-300 transition-colors">
+                        <span class="text-3xl block">🧸</span>
+                        <h4 class="font-bold text-gray-900 text-base">Método Lúdico</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">El juego intencionado es la herramienta central con la que el niño asimila conceptos matemáticos, verbales y espaciales.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-3 hover:border-rose-300 transition-colors">
+                        <span class="text-3xl block">⏳</span>
+                        <h4 class="font-bold text-gray-900 text-base">Respeto al Ritmo</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Cada niño madura a tiempos distintos; la enseñanza se adapta a su zona de desarrollo próximo sin presiones prematuras.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-3 hover:border-rose-300 transition-colors">
+                        <span class="text-3xl block">❤️</span>
+                        <h4 class="font-bold text-gray-900 text-base">Educación Emocional</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Acompañamiento en el reconocimiento de emociones básicas, resolución constructiva de diferencias y empatía comunitaria.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-3 hover:border-rose-300 transition-colors">
+                        <span class="text-3xl block">🛡️</span>
+                        <h4 class="font-bold text-gray-900 text-base">Seguridad y Bienestar</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Ambiente libre de amenazas donde el error es celebrado como oportunidad natural de experimentación y descubrimiento.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-3 hover:border-rose-300 transition-colors">
+                        <span class="text-3xl block">👪</span>
+                        <h4 class="font-bold text-gray-900 text-base">Alianza con Familias</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">Comunicación continua mediante reportes de evolución diaria y reuniones trimestrales de seguimiento.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6 Áreas de Desarrollo y Calendario Escolar Dinámico -->
+            <section id="areas-y-calendario" class="grid lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- 6 Áreas de Desarrollo -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <span class="text-rose-600 font-bold uppercase tracking-wider text-xs">Currículo Integral</span>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-1">Seis Áreas Centrales de Estimulación</h3>
+                        <p class="text-sm text-gray-600 mt-2">Planificamos rutinas diarias balanceadas que fortalecen equilibradamente todas las dimensiones del crecimiento:</p>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2">
+                            <div class="flex items-center gap-2 text-rose-600 font-bold text-sm">
+                                <i data-lucide="smile" class="w-5 h-5"></i>
+                                <span>1. Personal y Social</span>
+                            </div>
+                            <p class="text-xs text-gray-500">Autonomía en higiene personal, alimentación independiente y socialización grupal armónica.</p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2">
+                            <div class="flex items-center gap-2 text-blue-600 font-bold text-sm">
+                                <i data-lucide="message-square" class="w-5 h-5"></i>
+                                <span>2. Lenguaje y Expresión</span>
+                            </div>
+                            <p class="text-xs text-gray-500">Lectura de cuentos ilustrados, pronunciación fonética, vocabulario enriquecido e inicio de grafomotricidad.</p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2">
+                            <div class="flex items-center gap-2 text-amber-600 font-bold text-sm">
+                                <i data-lucide="activity" class="w-5 h-5"></i>
+                                <span>3. Psicomotricidad</span>
+                            </div>
+                            <p class="text-xs text-gray-500">Motricidad gruesa (equilibrio, saltos, carreras) y motricidad fina (pinza digital, plastilina, ensartado).</p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2">
+                            <div class="flex items-center gap-2 text-purple-600 font-bold text-sm">
+                                <i data-lucide="palette" class="w-5 h-5"></i>
+                                <span>4. Arte y Creatividad</span>
+                            </div>
+                            <p class="text-xs text-gray-500">Pintura con dedos, collage, ritmos musicales tradicionales, canciones infantiles y dramatizaciones.</p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2">
+                            <div class="flex items-center gap-2 text-emerald-600 font-bold text-sm">
+                                <i data-lucide="leaf" class="w-5 h-5"></i>
+                                <span>5. Exploración Natural</span>
+                            </div>
+                            <p class="text-xs text-gray-500">Observación botánica y de fauna local en Baney, ciclos del agua, estaciones y respeto por el medio ambiente.</p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-2">
+                            <div class="flex items-center gap-2 text-indigo-600 font-bold text-sm">
+                                <i data-lucide="shapes" class="w-5 h-5"></i>
+                                <span>6. Pensamiento Lógico</span>
+                            </div>
+                            <p class="text-xs text-gray-500">Seriaciones por color, correspondencia biunívoca, nociones espaciales (arriba/abajo, dentro/fuera).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendario Escolar Dinámico -->
+                <div class="lg:col-span-5 bg-white p-8 rounded-3xl border border-gray-200 shadow-sm space-y-6">
+                    <div class="border-b border-gray-100 pb-4 text-center">
+                        <span class="inline-block bg-rose-100 text-rose-700 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">Cronograma Dinámico</span>
+                        <h3 class="text-xl font-bold text-gray-900">
+                            Calendario Escolar Clave <span class="dynamic-cycle-dash">2026–2027</span>
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-1">Fechas oficiales reguladas y actualizadas para el presente año lectivo</p>
+                    </div>
+
+                    <div class="space-y-3.5 text-xs sm:text-sm">
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2.5">
+                            <span class="font-semibold text-gray-800">1 de Septiembre <span class="dynamic-start-year">2026</span></span>
+                            <span class="text-rose-600 font-bold text-right">Apertura e Inscripciones</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2.5">
+                            <span class="font-semibold text-gray-800">15 de Septiembre <span class="dynamic-start-year">2026</span></span>
+                            <span class="text-rose-600 font-bold text-right">Inicio formal de clases</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2.5">
+                            <span class="font-semibold text-gray-800">21 de Noviembre <span class="dynamic-start-year">2026</span></span>
+                            <span class="text-rose-600 font-bold text-right">1ª Reunión General (Tutores)</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2.5">
+                            <span class="font-semibold text-gray-800">19 de Diciembre <span class="dynamic-start-year">2026</span></span>
+                            <span class="text-rose-600 font-bold text-right">1ª Evaluación y Entrega de Notas</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2.5">
+                            <span class="font-semibold text-gray-800">8 de Enero <span class="dynamic-end-year">2027</span></span>
+                            <span class="text-rose-600 font-bold text-right">Reanudación (2º Trimestre)</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2.5">
+                            <span class="font-semibold text-gray-800">6 de Marzo <span class="dynamic-end-year">2027</span></span>
+                            <span class="text-rose-600 font-bold text-right">2ª Reunión General (Tutores)</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-1">
+                            <span class="font-semibold text-gray-800">30 de Junio <span class="dynamic-end-year">2027</span></span>
+                            <span class="text-rose-600 font-bold text-right">Clausura y Entrega Final</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-100">
+                        <a href="/admisiones" class="w-full block bg-rose-600 text-white text-center py-3 rounded-xl font-bold text-xs shadow-md hover:bg-rose-700 transition-colors">
+                            Reservar Plaza para el Ciclo <span class="dynamic-cycle">2026-2027</span>
+                        </a>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="bg-rose-600 p-2 rounded-xl text-white">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-sm font-extrabold text-rose-500 block leading-tight uppercase tracking-wide">Toshinori Morimoto</span>
+                    <span class="text-[10px] text-gray-400 font-medium block">Centro Privado de Educación Infantil</span>
+                </div>
+            </div>
+            <div class="text-center md:text-right text-xs text-gray-400 space-y-2">
+                <p>Ubicación: Av. de la Independencia, s/n, Baney, Guinea Ecuatorial</p>
+                <p>Registro Ministerial: Despacho nº 016-017-146 (Dirección General de Planificación Educativa)</p>
+                <p>Derechos Reservados © <span class="dynamic-current-year">2026</span> Centro Privado Toshinori Morimoto.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Cloudflare Pages SPA & Multi-Page Routing
+/quienes-somos    /quienes-somos/index.html    200
+/pedagogia        /pedagogia/index.html        200
+/admisiones       /admisiones/index.html       200
+/contacto         /contacto/index.html         200
+/*                /index.html                  200
