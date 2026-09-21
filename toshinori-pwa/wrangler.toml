@@ -1,0 +1,11 @@
+name = "toshinori-morimoto-api"
+main = "src/index.js"
+compatibility_date = "2024-03-01"
+
+[vars]
+ENVIRONMENT = "production"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "toshinori_db"
+database_id = "8321aa6c-ae2c-4c0f-aac6-5628ca1795d1" # Reemplazar con el ID obtenido al crear la base de datos D1
