@@ -4,8 +4,9 @@ compatibility_date = "2024-03-01"
 
 [vars]
 ENVIRONMENT = "production"
-ADMIN_EMAIL = "guillermonohanikobara@gmail.com"
-FROM_EMAIL = "Centro Toshinori Morimoto <notificaciones@toshinorimorimoto.gq>"
+ADMIN_EMAIL_ENROLL = "admisiones@toshinorimorimoto.org"
+ADMIN_EMAIL_CONTACT = "contacto@toshinorimorimoto.org"
+FROM_EMAIL = "Centro Toshinori Morimoto <notificaciones@toshinorimorimoto.org>"
 # RESEND_API_KEY NO va aquí (no se commitea). Se configura como secreto con:
 #   npx wrangler secret put RESEND_API_KEY
 # usando una API key obtenida gratis en https://resend.com

@@ -8,16 +8,18 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-// Envía una notificación por correo usando la API de Resend (https://resend.com).
+// Envía un correo usando la API de Resend (https://resend.com).
 // Es "best effort": si falla o no hay RESEND_API_KEY configurada, no interrumpe
 // el guardado en la base de datos, solo se informa en la respuesta.
-async function sendEmailNotification(env, { subject, html, replyTo }) {
+async function sendEmail(env, { to, subject, html, replyTo }) {
   if (!env.RESEND_API_KEY) {
     return { sent: false, reason: "RESEND_API_KEY no configurada" };
   }
+  if (!to) {
+    return { sent: false, reason: "Sin destinatario" };
+  }
 
-  const adminEmail = env.ADMIN_EMAIL || "guillermonohanikobara@gmail.com";
-  const fromEmail = env.FROM_EMAIL || "Centro Toshinori Morimoto <notificaciones@toshinorimorimoto.gq>";
+  const fromEmail = env.FROM_EMAIL || "Centro Toshinori Morimoto <notificaciones@toshinorimorimoto.org>";
 
   try {
     const res = await fetch("https://api.resend.com/emails", {
@@ -28,7 +30,7 @@ async function sendEmailNotification(env, { subject, html, replyTo }) {
       },
       body: JSON.stringify({
         from: fromEmail,
-        to: [adminEmail],
+        to: Array.isArray(to) ? to : [to],
         reply_to: replyTo || undefined,
         subject,
         html
@@ -76,7 +78,17 @@ export default {
           "INSERT INTO enrollments (student_name, birth_date, tutor_name, tutor_phone, tutor_email, shift) VALUES (?, ?, ?, ?, ?, ?)"
         ).bind(student_name, birth_date, tutor_name, tutor_phone, tutor_email, shift).run();
 
-        const emailResult = await sendEmailNotification(env, {
+        const shiftLabels = {
+          "mañana": "Turno Mañana (08:00H - 13:00H)",
+          "tarde": "Turno Tarde (13:00H - 18:00H)",
+          "completo": "Turno Completo (08:00H - 18:00H)"
+        };
+        const shiftLabel = shiftLabels[shift] || shift;
+
+        // a) Notificación interna al centro (administración de admisiones)
+        const adminEmail = env.ADMIN_EMAIL_ENROLL || "admisiones@toshinorimorimoto.org";
+        const emailResult = await sendEmail(env, {
+          to: adminEmail,
           subject: `Nueva pre-inscripción: ${student_name}`,
           replyTo: tutor_email || undefined,
           html: `
@@ -86,16 +98,46 @@ export default {
             <p><strong>Tutor legal:</strong> ${escapeHtml(tutor_name)}</p>
             <p><strong>Teléfono:</strong> ${escapeHtml(tutor_phone)}</p>
             <p><strong>Correo del tutor:</strong> ${escapeHtml(tutor_email || "No proporcionado")}</p>
-            <p><strong>Turno solicitado:</strong> ${escapeHtml(shift)}</p>
+            <p><strong>Turno solicitado:</strong> ${escapeHtml(shiftLabel)}</p>
             <hr>
             <p style="font-size:12px;color:#888;">Este registro también quedó guardado en la base de datos del centro.</p>
           `
         });
 
+        // b) Correo de confirmación al tutor, si dejó su correo electrónico
+        let confirmationResult = { sent: false, reason: "Tutor no proporcionó correo" };
+        if (tutor_email) {
+          confirmationResult = await sendEmail(env, {
+            to: tutor_email,
+            subject: "Hemos recibido tu solicitud de pre-inscripción — Centro Toshinori Morimoto",
+            html: `
+              <h2>¡Gracias, ${escapeHtml(tutor_name)}!</h2>
+              <p>Hemos recibido correctamente tu solicitud de pre-inscripción para <strong>${escapeHtml(student_name)}</strong> en el Centro Privado Toshinori Morimoto (Baney).</p>
+              <p><strong>Resumen de tu solicitud:</strong></p>
+              <ul>
+                <li><strong>Alumno/a:</strong> ${escapeHtml(student_name)}</li>
+                <li><strong>Fecha de nacimiento:</strong> ${escapeHtml(birth_date)}</li>
+                <li><strong>Turno solicitado:</strong> ${escapeHtml(shiftLabel)}</li>
+              </ul>
+              <p>Esta solicitud es una <strong>reserva de plaza</strong>. Para completar la matrícula, recuerda presentar en la secretaría del centro:</p>
+              <ul>
+                <li>Fotocopia completa del certificado de nacimiento del menor</li>
+                <li>1 fotografía en color del alumno, tamaño carnet</li>
+                <li>Fotocopia del Documento de Identidad del tutor legal</li>
+                <li>Pago del 50% de la matrícula anual como depósito inicial</li>
+              </ul>
+              <p>Nuestro equipo de administración se pondrá en contacto contigo en breve al teléfono ${escapeHtml(tutor_phone)} para confirmar los siguientes pasos.</p>
+              <hr>
+              <p style="font-size:12px;color:#888;">Centro Privado Toshinori Morimoto — Av. de la Independencia, s/n, Baney, Guinea Ecuatorial.</p>
+            `
+          });
+        }
+
         return new Response(JSON.stringify({
           success: true,
           message: "Pre-inscripción registrada con éxito.",
-          email_sent: emailResult.sent
+          email_sent: emailResult.sent,
+          confirmation_sent: confirmationResult.sent
         }), {
           status: 201,
           headers: { ...corsHeaders, "Content-Type": "application/json" }
@@ -118,7 +160,9 @@ export default {
           "INSERT INTO contacts (name, phone, email, message) VALUES (?, ?, ?, ?)"
         ).bind(name, phone, email, message).run();
 
-        const emailResult = await sendEmailNotification(env, {
+        const adminEmail = env.ADMIN_EMAIL_CONTACT || "contacto@toshinorimorimoto.org";
+        const emailResult = await sendEmail(env, {
+          to: adminEmail,
           subject: `Nuevo mensaje de contacto: ${name}`,
           replyTo: email || undefined,
           html: `
