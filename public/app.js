@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
     mobileMenuBtn.addEventListener("click", () => {
       mobileMenu.classList.toggle("hidden");
       const isOpen = !mobileMenu.classList.contains("hidden");
+      mobileMenuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      mobileMenuBtn.setAttribute("aria-label", isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación");
       if (menuIcon) {
         menuIcon.setAttribute("data-lucide", isOpen ? "x" : "menu");
         if (typeof lucide !== 'undefined') {
@@ -371,6 +373,87 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Inicialización de Galería de Espacios y Lightbox Modal
+  function initGallery() {
+    const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('gallery-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxDesc = document.getElementById('lightbox-desc');
+    const lightboxClose = document.getElementById('lightbox-close-btn');
+
+    if (filterBtns.length > 0) {
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filter = btn.getAttribute('data-filter');
+
+          // Alternar estilos activos de botones de filtrado
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-rose-600', 'text-white', 'shadow-sm');
+            b.classList.add('bg-white', 'text-gray-600', 'border', 'border-gray-200');
+          });
+          btn.classList.remove('bg-white', 'text-gray-600', 'border', 'border-gray-200');
+          btn.classList.add('bg-rose-600', 'text-white', 'shadow-sm');
+
+          // Filtrar las tarjetas de la galería con animación suave
+          galleryItems.forEach(item => {
+            const category = item.getAttribute('data-category');
+            if (filter === 'all' || category === filter) {
+              item.classList.remove('hidden');
+              item.classList.add('animate-in', 'fade-in', 'duration-300');
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+        });
+      });
+    }
+
+    // Controlador del Visor Modal Lightbox
+    if (lightbox && lightboxClose) {
+      document.querySelectorAll('.gallery-zoom-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const src = btn.getAttribute('data-src');
+          const title = btn.getAttribute('data-title') || '';
+          const desc = btn.getAttribute('data-desc') || '';
+
+          if (lightboxImg) {
+            lightboxImg.src = src;
+            lightboxImg.alt = title;
+          }
+          if (lightboxTitle) lightboxTitle.textContent = title;
+          if (lightboxDesc) lightboxDesc.textContent = desc;
+
+          lightbox.classList.remove('hidden');
+          document.body.classList.add('overflow-hidden');
+          if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+          }
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          closeLightbox();
+        }
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+          closeLightbox();
+        }
+      });
+    }
+  }
+
   // Resaltado de enlace de navegación activo
   function highlightActiveNav() {
     const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
@@ -387,4 +470,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   applyDynamicDates();
   highlightActiveNav();
+  initGallery();
 });

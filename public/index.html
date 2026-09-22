@@ -89,7 +89,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logotipo -->
-                <div class="flex items-center gap-3">
+                <a href="/" class="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-rose-500 rounded-xl" aria-label="Página de inicio Centro Privado Toshinori Morimoto">
                     <div class="bg-rose-600 text-white p-2.5 rounded-xl shadow-md">
                         <i data-lucide="graduation-cap" class="w-8 h-8"></i>
                     </div>
@@ -97,34 +97,41 @@
                         <span class="text-xl md:text-2xl font-extrabold text-rose-600 block leading-tight tracking-tight">TOSHINORI MORIMOTO</span>
                         <span class="text-xs text-gray-500 font-medium tracking-widest block uppercase">Centro Privado - Baney</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- Menú Escritorio -->
-                <nav class="hidden lg:flex items-center gap-6">
-                    <a href="/" class="text-rose-600 font-bold text-sm transition-colors">Inicio</a>
+                <nav aria-label="Navegación principal" class="hidden lg:flex items-center gap-6">
+                    <a href="/" class="text-rose-600 font-bold text-sm transition-colors" aria-current="page">Inicio</a>
                     <a href="/quienes-somos" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Quiénes Somos</a>
                     <a href="/pedagogia" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Pedagogía</a>
                     <a href="/admisiones" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Admisiones y Costos</a>
+                    <a href="#galeria" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Galería</a>
                     <a href="/contacto" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Contacto</a>
                     <a href="/admisiones" class="bg-rose-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:bg-rose-700 transition-colors">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
                 </nav>
 
                 <!-- Botón Menú Móvil -->
-                <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-600 hover:text-rose-600 focus:outline-none">
+                <button id="mobile-menu-btn" 
+                        type="button"
+                        aria-expanded="false" 
+                        aria-controls="mobile-menu" 
+                        aria-label="Abrir menú de navegación"
+                        class="lg:hidden p-2 text-gray-600 hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 rounded-lg">
                     <i id="menu-icon" data-lucide="menu" class="w-7 h-7"></i>
                 </button>
             </div>
         </div>
 
         <!-- Menú Móvil Desplegable -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-inner">
-            <a href="/" class="block text-rose-600 font-bold py-2">Inicio</a>
+        <nav id="mobile-menu" aria-label="Menú móvil" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-inner">
+            <a href="/" class="block text-rose-600 font-bold py-2" aria-current="page">Inicio</a>
             <a href="/quienes-somos" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Quiénes Somos</a>
-            <a href="/pedagogia" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Propuesta Pedagógica</a>
-            <a href="/admisiones" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inscripción y Costos</a>
+            <a href="/pedagogia" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Pedagogía</a>
+            <a href="/admisiones" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Admisiones y Costos</a>
+            <a href="#galeria" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Galería</a>
             <a href="/contacto" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Contacto</a>
             <a href="/admisiones" class="block bg-rose-600 text-white text-center px-4 py-3 rounded-xl font-bold shadow-md hover:bg-rose-700">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
-        </div>
+        </nav>
     </header>
 
     <!-- SECCIÓN HÉROE (Inicio) -->
@@ -331,6 +338,221 @@
             </div>
         </div>
     </section>
+
+    <!-- SECCIÓN GALERÍA DEL CENTRO -->
+    <section id="galeria" class="py-20 bg-gradient-to-b from-white via-rose-50/20 to-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-4">
+                <span class="text-rose-600 font-bold uppercase tracking-wider text-xs bg-rose-50 px-3.5 py-1.5 rounded-full border border-rose-100 inline-block">Instalaciones y Entorno</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Nuestros Espacios en Baney</h2>
+                <div class="w-24 h-1.5 bg-rose-600 mx-auto rounded-full"></div>
+                <p class="text-gray-600 text-sm md:text-base leading-relaxed">
+                    Fotografías oficiales de nuestras instalaciones en Baney (Bioko Norte), mobiliario pedagógico y espacios diseñados para el desarrollo integral en la primera infancia.
+                </p>
+            </div>
+
+            <!-- Filtros de Categoría -->
+            <div class="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-10" id="gallery-filter-tabs">
+                <button id="filter-btn-all" data-filter="all" class="gallery-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-rose-600 text-white shadow-sm hover:shadow">
+                    Todas las Fotos (5)
+                </button>
+                <button id="filter-btn-sede" data-filter="sede" class="gallery-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-gray-600 hover:text-rose-600 hover:bg-rose-50 border border-gray-200">
+                    Sede y Fachada
+                </button>
+                <button id="filter-btn-aulas" data-filter="aulas" class="gallery-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-gray-600 hover:text-rose-600 hover:bg-rose-50 border border-gray-200">
+                    Aulas y Mobiliario
+                </button>
+                <button id="filter-btn-entorno" data-filter="entorno" class="gallery-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-white text-gray-600 hover:text-rose-600 hover:bg-rose-50 border border-gray-200">
+                    Entorno Natural Baney
+                </button>
+            </div>
+
+            <!-- Cuadrícula de Galería con Enmarcado Estilizado -->
+            <div id="gallery-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- FOTO 1: Fachada Principal con Rótulo Oficial -->
+                <div id="gallery-item-1" data-category="sede" class="gallery-item group relative bg-white p-3 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-rose-100/60 ring-1 ring-black/5 hover:-translate-y-1">
+                    <div class="relative overflow-hidden rounded-xl bg-slate-150 aspect-[4/3]">
+                        <img id="gallery-img-1" 
+                             src="/images/Gemini_Generated_Image_ua0a4zua0a4zua0a.jpg" 
+                             alt="Fachada frontal oficial del Centro Privado Toshinori Morimoto y Biblioteca en Baney" 
+                             referrerPolicy="no-referrer"
+                             class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105 filter contrast-[1.08] brightness-[1.02] saturate-[1.12]">
+                        <div class="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-inset ring-black/10 shadow-inner"></div>
+                        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-lg text-[10px] font-bold text-rose-700 tracking-wide uppercase shadow-sm">
+                            Sede Oficial
+                        </div>
+                        <button id="btn-zoom-1" aria-label="Ampliar foto de la fachada principal" class="gallery-zoom-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm text-gray-700 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-rose-600 hover:text-white" data-src="/images/Gemini_Generated_Image_ua0a4zua0a4zua0a.jpg" data-title="Fachada Principal y Rótulo Oficial" data-desc="Vista frontal del Centro Privado Toshinori Morimoto y Biblioteca en Baney, Bioko Norte. Acceso principal protegido y señalizado.">
+                            <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                        </button>
+                        <div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-gray-950/90 via-gray-900/50 to-transparent rounded-b-xl text-white">
+                            <h4 class="font-bold text-sm leading-tight text-white">Entrada y Rótulo Oficial</h4>
+                            <p class="text-[11px] text-gray-200 mt-0.5 line-clamp-1">Sede principal del Centro y Biblioteca en Baney</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 px-1 flex items-center justify-between">
+                        <span class="text-[11px] text-gray-500 font-medium flex items-center gap-1.5">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-500"></i> Baney Centro
+                        </span>
+                        <span class="text-[10px] text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded-full">Sede Activa</span>
+                    </div>
+                </div>
+
+                <!-- FOTO 2: Aula Interior con Mesas Hexagonales Reales -->
+                <div id="gallery-item-2" data-category="aulas" class="gallery-item group relative bg-white p-3 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-rose-100/60 ring-1 ring-black/5 hover:-translate-y-1">
+                    <div class="relative overflow-hidden rounded-xl bg-slate-150 aspect-[4/3]">
+                        <img id="gallery-img-2" 
+                             src="/images/Gemini_Generated_Image_3o0znn3o0znn3o0z.jpg" 
+                             alt="Aula interior infantil con mesas pedagógicas hexagonales de madera celestes y ventilación natural" 
+                             referrerPolicy="no-referrer"
+                             class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105 filter contrast-[1.16] brightness-[0.98] saturate-[1.15]">
+                        <div class="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-inset ring-black/10 shadow-inner"></div>
+                        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-lg text-[10px] font-bold text-blue-700 tracking-wide uppercase shadow-sm">
+                            Aula Infantil
+                        </div>
+                        <button id="btn-zoom-2" aria-label="Ampliar foto del aula de estimulación" class="gallery-zoom-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm text-gray-700 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-rose-600 hover:text-white" data-src="/images/Gemini_Generated_Image_3o0znn3o0znn3o0z.jpg" data-title="Aula de Preescolar con Mobiliario Hexagonal" data-desc="Mobiliario pedagógico hexagonal diseñado a la escala de los alumnos para favorecer el trabajo cooperativo, la socialización y dinámicas lúdicas.">
+                            <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                        </button>
+                        <div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-gray-950/90 via-gray-900/50 to-transparent rounded-b-xl text-white">
+                            <h4 class="font-bold text-sm leading-tight text-white">Mobiliario Hexagonal Infantil</h4>
+                            <p class="text-[11px] text-gray-200 mt-0.5 line-clamp-1">Mesas cooperativas celestes y luz natural</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 px-1 flex items-center justify-between">
+                        <span class="text-[11px] text-gray-500 font-medium flex items-center gap-1.5">
+                            <i data-lucide="users" class="w-3.5 h-3.5 text-blue-500"></i> Trabajo en Grupo
+                        </span>
+                        <span class="text-[10px] text-blue-600 font-bold bg-blue-50 px-2 py-0.5 rounded-full">Preescolar</span>
+                    </div>
+                </div>
+
+                <!-- FOTO 3: Fachada con Acceso Escalonado y Rótulo -->
+                <div id="gallery-item-3" data-category="sede" class="gallery-item group relative bg-white p-3 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-rose-100/60 ring-1 ring-black/5 hover:-translate-y-1">
+                    <div class="relative overflow-hidden rounded-xl bg-slate-150 aspect-[4/3]">
+                        <img id="gallery-img-3" 
+                             src="/images/Gemini_Generated_Image_z2qs8oz2qs8oz2qs.jpg" 
+                             alt="Acceso al Centro Toshinori Morimoto y Biblioteca con escalinata de entrada" 
+                             referrerPolicy="no-referrer"
+                             class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105 filter contrast-[1.08] brightness-[1.01] saturate-[1.10]">
+                        <div class="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-inset ring-black/10 shadow-inner"></div>
+                        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-lg text-[10px] font-bold text-amber-700 tracking-wide uppercase shadow-sm">
+                            Arquitectura
+                        </div>
+                        <button id="btn-zoom-3" aria-label="Ampliar foto del acceso escalonado" class="gallery-zoom-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm text-gray-700 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-rose-600 hover:text-white" data-src="/images/Gemini_Generated_Image_z2qs8oz2qs8oz2qs.jpg" data-title="Perspectiva Arquitectónica del Centro" data-desc="Escalera de acceso a la planta del centro y visual del letrero identificativo que rinde homenaje a Toshinori Morimoto.">
+                            <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                        </button>
+                        <div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-gray-950/90 via-gray-900/50 to-transparent rounded-b-xl text-white">
+                            <h4 class="font-bold text-sm leading-tight text-white">Acceso y Galería del Edificio</h4>
+                            <p class="text-[11px] text-gray-200 mt-0.5 line-clamp-1">Estructura sólida con ventilación cruzada</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 px-1 flex items-center justify-between">
+                        <span class="text-[11px] text-gray-500 font-medium flex items-center gap-1.5">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-500"></i> Acceso Resguardado
+                        </span>
+                        <span class="text-[10px] text-amber-600 font-bold bg-amber-50 px-2 py-0.5 rounded-full">Planta Baja</span>
+                    </div>
+                </div>
+
+                <!-- FOTO 4: Edificio con Entorno Vegetal y Papayero -->
+                <div id="gallery-item-4" data-category="entorno" class="gallery-item group relative bg-white p-3 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-rose-100/60 ring-1 ring-black/5 hover:-translate-y-1">
+                    <div class="relative overflow-hidden rounded-xl bg-slate-150 aspect-[4/3]">
+                        <img id="gallery-img-4" 
+                             src="/images/Gemini_Generated_Image_f2pz4lf2pz4lf2pz.jpg" 
+                             alt="Edificio del centro educativo con arbolado y papayero tropical en el patio de Baney" 
+                             referrerPolicy="no-referrer"
+                             class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105 filter contrast-[1.08] brightness-[1.02] saturate-[1.15]">
+                        <div class="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-inset ring-black/10 shadow-inner"></div>
+                        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-lg text-[10px] font-bold text-emerald-700 tracking-wide uppercase shadow-sm">
+                            Entorno Natural
+                        </div>
+                        <button id="btn-zoom-4" aria-label="Ampliar foto del entorno vegetal" class="gallery-zoom-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm text-gray-700 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-rose-600 hover:text-white" data-src="/images/Gemini_Generated_Image_f2pz4lf2pz4lf2pz.jpg" data-title="Patio y Vegetación Tropical" data-desc="Campus rodeado del microclima fresco de Baney, con vegetación tropical autóctona que ofrece sombra y aire puro a los alumnos.">
+                            <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                        </button>
+                        <div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-gray-950/90 via-gray-900/50 to-transparent rounded-b-xl text-white">
+                            <h4 class="font-bold text-sm leading-tight text-white">Patio con Vegetación Autóctona</h4>
+                            <p class="text-[11px] text-gray-200 mt-0.5 line-clamp-1">Entorno fresco y aire puro en Bioko Norte</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 px-1 flex items-center justify-between">
+                        <span class="text-[11px] text-gray-500 font-medium flex items-center gap-1.5">
+                            <i data-lucide="trees" class="w-3.5 h-3.5 text-emerald-500"></i> Aire Puro
+                        </span>
+                        <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">Naturaleza</span>
+                    </div>
+                </div>
+
+                <!-- FOTO 5: Muro Perimetral y Delimitación del Centro -->
+                <div id="gallery-item-5" data-category="entorno" class="gallery-item group relative bg-white p-3 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-rose-100/60 ring-1 ring-black/5 hover:-translate-y-1">
+                    <div class="relative overflow-hidden rounded-xl bg-slate-150 aspect-[4/3]">
+                        <img id="gallery-img-5" 
+                             src="/images/Gemini_Generated_Image_2wjjm22wjjm22wjj.jpg" 
+                             alt="Entorno perimetral seguro del centro escolar con muro delimitador en Baney" 
+                             referrerPolicy="no-referrer"
+                             class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105 filter contrast-[1.07] brightness-[1.01] saturate-[1.12]">
+                        <div class="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-inset ring-black/10 shadow-inner"></div>
+                        <div class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-lg text-[10px] font-bold text-emerald-700 tracking-wide uppercase shadow-sm">
+                            Campus y Perímetro
+                        </div>
+                        <button id="btn-zoom-5" aria-label="Ampliar foto del perímetro exterior" class="gallery-zoom-btn absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm text-gray-700 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-rose-600 hover:text-white" data-src="/images/Gemini_Generated_Image_2wjjm22wjjm22wjj.jpg" data-title="Límites del Recinto Escolar" data-desc="Muro perimetral y delimitación que proporciona resguardo físico y tranquilidad para las actividades de los menores.">
+                            <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                        </button>
+                        <div class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-gray-950/90 via-gray-900/50 to-transparent rounded-b-xl text-white">
+                            <h4 class="font-bold text-sm leading-tight text-white">Perímetro Escolar Seguro</h4>
+                            <p class="text-[11px] text-gray-200 mt-0.5 line-clamp-1">Delimitación física en el municipio de Baney</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 px-1 flex items-center justify-between">
+                        <span class="text-[11px] text-gray-500 font-medium flex items-center gap-1.5">
+                            <i data-lucide="shield" class="w-3.5 h-3.5 text-emerald-500"></i> Perímetro Protegido
+                        </span>
+                        <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">513 m²</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Banner pedagógico inferior de la galería -->
+            <div id="gallery-info-banner" class="mt-12 bg-white rounded-2xl p-6 border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4 text-center md:text-left">
+                    <div class="bg-rose-100 text-rose-600 p-3 rounded-xl shrink-0 hidden sm:block">
+                        <i data-lucide="eye" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm">¿Deseas visitar nuestras instalaciones presencialmente?</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Organizamos visitas guiadas para tutores y familias de lunes a viernes en horario de mañana en Baney.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 shrink-0">
+                    <a id="btn-gallery-visit" href="https://wa.me/240222298863?text=Hola,%20deseo%20agendar%20una%20visita%20para%20conocer%20las%20aulas%20del%20Centro%20Toshinori%20Morimoto%20en%20Baney." target="_blank" rel="noopener noreferrer" class="bg-rose-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-rose-700 transition-colors shadow-sm flex items-center gap-2">
+                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                        <span>Agendar Visita Guiada</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Lightbox Accesible para Galería -->
+    <div id="gallery-lightbox" class="fixed inset-0 z-50 bg-gray-950/90 backdrop-blur-md hidden flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-label="Visor ampliado de imagen del centro">
+        <div class="relative max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-800/20">
+            <!-- Botón Cerrar -->
+            <button id="lightbox-close-btn" aria-label="Cerrar visor de imagen" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-gray-900/70 hover:bg-gray-900 text-white flex items-center justify-center transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-rose-500">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="relative bg-slate-950 flex items-center justify-center max-h-[65vh] overflow-hidden">
+                <img id="lightbox-img" src="" alt="" referrerPolicy="no-referrer" class="max-h-[65vh] w-auto object-contain">
+            </div>
+            <div class="p-6 bg-white">
+                <h3 id="lightbox-title" class="text-xl font-bold text-gray-900 leading-snug"></h3>
+                <p id="lightbox-desc" class="text-sm text-gray-600 mt-2 leading-relaxed"></p>
+                <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                    <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-rose-600"></i> Centro Privado Toshinori Morimoto - Baney</span>
+                    <a href="/admisiones" class="text-rose-600 font-bold hover:underline">Ver Admisiones y Tarifas &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- SECCIÓN PROPUESTA PEDAGÓGICA -->
     <section id="pedagogia" class="py-20 bg-gray-50 border-t border-b border-gray-100">

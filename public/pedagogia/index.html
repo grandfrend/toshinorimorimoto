@@ -89,7 +89,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logotipo -->
-                <a href="/" class="flex items-center gap-3">
+                <a href="/" class="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-rose-500 rounded-xl" aria-label="Página de inicio Centro Privado Toshinori Morimoto">
                     <div class="bg-rose-600 text-white p-2.5 rounded-xl shadow-md">
                         <i data-lucide="graduation-cap" class="w-8 h-8"></i>
                     </div>
@@ -100,31 +100,38 @@
                 </a>
 
                 <!-- Menú Escritorio -->
-                <nav class="hidden lg:flex items-center gap-6">
+                <nav aria-label="Navegación principal" class="hidden lg:flex items-center gap-6">
                     <a href="/" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Inicio</a>
                     <a href="/quienes-somos" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Quiénes Somos</a>
-                    <a href="/pedagogia" class="text-rose-600 font-bold text-sm transition-colors">Pedagogía</a>
+                    <a href="/pedagogia" class="text-rose-600 font-bold text-sm transition-colors" aria-current="page">Pedagogía</a>
                     <a href="/admisiones" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Admisiones y Costos</a>
+                    <a href="/#galeria" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Galería</a>
                     <a href="/contacto" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Contacto</a>
                     <a href="/admisiones" class="bg-rose-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:bg-rose-700 transition-colors">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
                 </nav>
 
                 <!-- Botón Menú Móvil -->
-                <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-600 hover:text-rose-600 focus:outline-none">
+                <button id="mobile-menu-btn" 
+                        type="button"
+                        aria-expanded="false" 
+                        aria-controls="mobile-menu" 
+                        aria-label="Abrir menú de navegación"
+                        class="lg:hidden p-2 text-gray-600 hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 rounded-lg">
                     <i id="menu-icon" data-lucide="menu" class="w-7 h-7"></i>
                 </button>
             </div>
         </div>
 
         <!-- Menú Móvil Desplegable -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-inner">
+        <nav id="mobile-menu" aria-label="Menú móvil" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-inner">
             <a href="/" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inicio</a>
             <a href="/quienes-somos" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Quiénes Somos</a>
-            <a href="/pedagogia" class="block text-rose-600 font-bold py-2">Propuesta Pedagógica</a>
-            <a href="/admisiones" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inscripción y Costos</a>
+            <a href="/pedagogia" class="block text-rose-600 font-bold py-2" aria-current="page">Pedagogía</a>
+            <a href="/admisiones" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Admisiones y Costos</a>
+            <a href="/#galeria" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Galería</a>
             <a href="/contacto" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Contacto</a>
             <a href="/admisiones" class="block bg-rose-600 text-white text-center px-4 py-3 rounded-xl font-bold shadow-md hover:bg-rose-700">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
-        </div>
+        </nav>
     </header>
 
     <!-- BREADCRUMB & HERO -->
