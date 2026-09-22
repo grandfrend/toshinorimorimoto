@@ -7,9 +7,14 @@ ENVIRONMENT = "production"
 ADMIN_EMAIL_ENROLL = "admisiones@toshinorimorimoto.org"
 ADMIN_EMAIL_CONTACT = "contacto@toshinorimorimoto.org"
 FROM_EMAIL = "Centro Toshinori Morimoto <notificaciones@toshinorimorimoto.org>"
-# RESEND_API_KEY NO va aquí (no se commitea). Se configura como secreto con:
-#   npx wrangler secret put RESEND_API_KEY
-# usando una API key obtenida gratis en https://resend.com
+# ADMIN_ALLOWED_ORIGIN: dominio EXACTO del sitio web (sin barra final),
+# usado para restringir el CORS del panel de administración.
+# TODO: confirmar y ajustar a la URL real de produccion.
+ADMIN_ALLOWED_ORIGIN = "https://toshinori-morimoto.grandfrend-media.workers.dev"
+# Secretos NO van aqui (no se commitean). Se configuran con:
+#   npx wrangler secret put RESEND_API_KEY    (obtenida en https://resend.com)
+#   npx wrangler secret put ADMIN_PASSWORD    (contraseña del panel de admin)
+#   npx wrangler secret put JWT_SECRET        (cadena aleatoria larga, ej: openssl rand -hex 32)
 
 [[d1_databases]]
 binding = "DB"

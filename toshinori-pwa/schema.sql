@@ -34,3 +34,11 @@ CREATE TABLE IF NOT EXISTS parent_attendance (
     tutor_signature TEXT DEFAULT 'firmado',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Tabla de Intentos de Login del Panel de Administración (rate-limiting anti fuerza bruta)
+CREATE TABLE IF NOT EXISTS login_attempts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ip TEXT NOT NULL,
+    success INTEGER NOT NULL DEFAULT 0, -- 1 = login correcto, 0 = fallido
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
