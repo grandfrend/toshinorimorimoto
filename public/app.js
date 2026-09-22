@@ -4,11 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
   }
   
-  // URL del backend de producción (Cloudflare Worker independiente conectado a D1).
-  // IMPORTANTE: el sitio estático y la API son dos Workers distintos en Cloudflare,
-  // por eso NO se puede usar window.location.origin aquí (esa es la URL del sitio
-  // estático, que no tiene rutas /api/*). Debe apuntar siempre al Worker de la API.
-  const API_URL = "https://toshinori-morimoto-api.grandfrend-media.workers.dev";
+  // URL de la API: ahora el mismo Worker sirve el sitio y la API (mismo origen).
+  const API_URL = window.location.origin;
 
   // Registro de Service Worker para capacidades PWA
   if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {

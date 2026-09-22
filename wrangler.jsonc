@@ -1,12 +1,27 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "toshinori-morimoto",
+  "main": "src/index.js",
   "compatibility_date": "2026-09-18",
   "observability": {
     "enabled": true
   },
   "assets": {
     "directory": "public",
+    "binding": "ASSETS",
     "not_found_handling": "single-page-application"
-  }
+  },
+  "vars": {
+    "ENVIRONMENT": "production",
+    "ADMIN_EMAIL_ENROLL": "admisiones@toshinorimorimoto.org",
+    "ADMIN_EMAIL_CONTACT": "contacto@toshinorimorimoto.org",
+    "FROM_EMAIL": "Centro Toshinori Morimoto <notificaciones@toshinorimorimoto.org>"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "toshinori_db",
+      "database_id": "8321aa6c-ae2c-4c0f-aac6-5628ca1795d1"
+    }
+  ]
 }
