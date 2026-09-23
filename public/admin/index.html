@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Panel de Administración — Centro Privado Toshinori Morimoto</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Nunito', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Toast Container para notificaciones -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none"></div>
+
+    <!-- HEADER & NAVEGACIÓN INSTITUCIONAL -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logotipo -->
+                <a href="/" class="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-rose-500 rounded-xl" aria-label="Página de inicio Centro Privado Toshinori Morimoto">
+                    <div class="bg-rose-600 text-white p-2.5 rounded-xl shadow-md">
+                        <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl md:text-2xl font-extrabold text-rose-600 block leading-tight tracking-tight">TOSHINORI MORIMOTO</span>
+                        <span class="text-xs text-gray-500 font-medium tracking-widest block uppercase">Centro Privado - Baney</span>
+                    </div>
+                </a>
+
+                <!-- Menú Escritorio Institucional -->
+                <nav aria-label="Navegación principal" class="hidden lg:flex items-center gap-6">
+                    <a href="/" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Inicio</a>
+                    <a href="/quienes-somos" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Quiénes Somos</a>
+                    <a href="/pedagogia" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Pedagogía</a>
+                    <a href="/admisiones" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Admisiones y Costos</a>
+                    <a href="/contacto" class="text-gray-600 hover:text-rose-600 font-semibold text-sm transition-colors">Contacto</a>
+                    <a href="/admisiones" class="bg-rose-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:bg-rose-700 transition-colors">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
+                </nav>
+
+                <!-- Botón Menú Móvil -->
+                <button id="mobile-menu-btn" 
+                        type="button"
+                        aria-expanded="false" 
+                        aria-controls="mobile-menu" 
+                        aria-label="Abrir menú de navegación"
+                        class="lg:hidden p-2 text-gray-600 hover:text-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-500 rounded-lg">
+                    <i id="menu-icon" data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <nav id="mobile-menu" aria-label="Menú móvil" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-3 shadow-inner">
+            <a href="/" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Inicio</a>
+            <a href="/quienes-somos" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Quiénes Somos</a>
+            <a href="/pedagogia" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Pedagogía</a>
+            <a href="/admisiones" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Admisiones y Costos</a>
+            <a href="/contacto" class="block text-gray-700 hover:text-rose-600 font-bold py-2">Contacto</a>
+            <a href="/admisiones" class="block bg-rose-600 text-white text-center px-4 py-3 rounded-xl font-bold shadow-md hover:bg-rose-700">Matrículas <span class="dynamic-cycle">2026-2027</span></a>
+        </nav>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <!-- 1. VISTA DE INICIO DE SESIÓN (ESTADO INICIAL) -->
+        <section id="login-view" class="flex items-center justify-center min-h-[55vh]">
+            <div class="w-full max-w-md bg-white rounded-3xl p-8 border border-gray-200 shadow-xl text-center">
+                <!-- Icono de Candado / Seguridad -->
+                <div class="w-16 h-16 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-sm border border-rose-100">
+                    <i data-lucide="lock" class="w-8 h-8"></i>
+                </div>
+
+                <div class="inline-flex items-center gap-1.5 bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                    <span>Acceso Administrativo</span>
+                </div>
+
+                <h1 class="text-2xl font-extrabold text-gray-900 mt-1 mb-2">Panel del Centro</h1>
+                <p class="text-xs text-gray-500 mb-6">
+                    Introduce la contraseña autorizada para gestionar las pre-inscripciones y los mensajes recibidos.
+                </p>
+
+                <form id="login-form" class="space-y-4 text-left" novalidate>
+                    <div>
+                        <label for="admin-password" class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
+                            Contraseña de Administración
+                        </label>
+                        <div class="relative">
+                            <input type="password" 
+                                   id="admin-password" 
+                                   required 
+                                   autocomplete="current-password"
+                                   placeholder="Introduce tu clave..." 
+                                   class="w-full px-4 py-3 pr-10 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm transition-colors">
+                            <button type="button" id="toggle-password-btn" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1" aria-label="Mostrar contraseña">
+                                <i id="toggle-password-icon" data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <p id="login-error-msg" class="text-red-600 text-xs mt-2 hidden"></p>
+                    </div>
+
+                    <button type="submit" 
+                            id="login-submit-btn" 
+                            class="w-full bg-rose-600 text-white font-bold text-sm py-3 px-6 rounded-xl shadow-md hover:bg-rose-700 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                        <span>Entrar al Panel</span>
+                        <i data-lucide="log-in" class="w-4 h-4"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 2. VISTA DEL PANEL ADMINISTRATIVO (OCULTO INICIALMENTE) -->
+        <section id="admin-dashboard" class="hidden space-y-6">
+
+            <!-- Cabecera del Panel con Información y Botón de Salir -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 border border-gray-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center gap-1.5 bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                            <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+                            Panel de Administración
+                        </span>
+                        <span class="text-xs text-gray-400 font-medium">Centro Privado Toshinori Morimoto</span>
+                    </div>
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
+                        Gestión de Admisiones y Mensajes
+                    </h1>
+                    <p class="text-xs text-gray-500">
+                        Registros guardados en la base de datos centralizada de Baney.
+                    </p>
+                </div>
+
+                <!-- Botones Superiores: Actualizar y Cerrar Sesión -->
+                <div class="flex items-center gap-3 self-end md:self-auto">
+                    <button type="button" 
+                            id="refresh-btn" 
+                            title="Recargar datos desde la base de datos"
+                            class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs py-2.5 px-4 rounded-xl transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                        <i id="refresh-icon" data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                        <span>Actualizar</span>
+                    </button>
+
+                    <button type="button" 
+                            id="logout-btn" 
+                            class="bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs py-2.5 px-4 rounded-xl border border-rose-200 transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-rose-500">
+                        <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                        <span>Cerrar sesión</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navegación de Pestañas (Estilo con rose-600 para activo) -->
+            <div class="flex flex-wrap items-center gap-3">
+                <button type="button" 
+                        id="tab-btn-enrollments" 
+                        class="tab-btn flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold shadow-sm transition-all bg-rose-600 text-white cursor-pointer"
+                        data-tab="enrollments">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>Pre-inscripciones</span>
+                    <span id="badge-enrollments-count" class="ml-1 px-2 py-0.5 rounded-full text-xs bg-white/20 text-white font-extrabold">0</span>
+                </button>
+
+                <button type="button" 
+                        id="tab-btn-contacts" 
+                        class="tab-btn flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-all bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 cursor-pointer"
+                        data-tab="contacts">
+                    <i data-lucide="mail" class="w-4 h-4"></i>
+                    <span>Mensajes de contacto</span>
+                    <span id="badge-contacts-count" class="ml-1 px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-700 font-extrabold">0</span>
+                </button>
+            </div>
+
+            <!-- CONTENIDO PESTAÑA A: PRE-INSCRIPCIONES -->
+            <div id="tab-content-enrollments" class="space-y-4">
+                <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="p-4 sm:p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-lg font-bold text-gray-900">Listado de Pre-inscripciones Escolares</h2>
+                            <p class="text-xs text-gray-500 mt-0.5">Solicitudes recibidas desde el formulario de admisiones del sitio.</p>
+                        </div>
+                        <div class="text-xs text-gray-500 font-medium">
+                            <span id="enrollments-count-text">Cargando registros...</span>
+                        </div>
+                    </div>
+
+                    <!-- Tabla responsive de Pre-inscripciones -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-gray-50 border-b border-gray-200 text-[11px] font-bold text-gray-600 uppercase tracking-wider">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">Fecha</th>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">Alumno/a</th>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">F. Nacimiento</th>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">Tutor</th>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">Teléfono</th>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">Correo</th>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">Turno</th>
+                                </tr>
+                            </thead>
+                            <tbody id="enrollments-tbody" class="divide-y divide-gray-200 text-xs">
+                                <tr>
+                                    <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                                        <div class="flex flex-col items-center justify-center gap-2">
+                                            <i data-lucide="loader-2" class="w-6 h-6 animate-spin text-rose-600"></i>
+                                            <span>Cargando pre-inscripciones...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENIDO PESTAÑA B: MENSAJES DE CONTACTO -->
+            <div id="tab-content-contacts" class="hidden space-y-4">
+                <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="p-4 sm:p-6 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-lg font-bold text-gray-900">Mensajes de Contacto Recibidos</h2>
+                            <p class="text-xs text-gray-500 mt-0.5">Consultas y sugerencias enviadas por familias y visitantes.</p>
+                        </div>
+                        <div class="text-xs text-gray-500 font-medium">
+                            <span id="contacts-count-text">Cargando mensajes...</span>
+                        </div>
+                    </div>
+
+                    <!-- Tabla responsive de Mensajes -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-gray-50 border-b border-gray-200 text-[11px] font-bold text-gray-600 uppercase tracking-wider">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">Fecha</th>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">Nombre</th>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">Teléfono</th>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap">Correo</th>
+                                    <th scope="col" class="px-6 py-3.5 whitespace-nowrap min-w-[320px]">Mensaje</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contacts-tbody" class="divide-y divide-gray-200 text-xs">
+                                <tr>
+                                    <td colspan="5" class="px-6 py-12 text-center text-gray-500">
+                                        <div class="flex flex-col items-center justify-center gap-2">
+                                            <i data-lucide="loader-2" class="w-6 h-6 animate-spin text-rose-600"></i>
+                                            <span>Cargando mensajes de contacto...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL DETALLE DE MENSAJE COMPLETO (Lectura cómoda) -->
+    <div id="message-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-gray-200 relative animate-in fade-in zoom-in-95 duration-200">
+            <button type="button" id="close-message-modal-btn" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 p-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500" aria-label="Cerrar ventana">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-4">
+                <div class="bg-rose-100 text-rose-600 p-2 rounded-xl">
+                    <i data-lucide="mail-open" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 id="modal-sender-name" class="font-bold text-gray-900 text-base">Mensaje</h3>
+                    <p id="modal-date" class="text-xs text-gray-500"></p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-4 mb-4 text-xs space-y-1 border border-gray-200">
+                <p><strong>Teléfono:</strong> <span id="modal-phone" class="text-gray-700"></span></p>
+                <p><strong>Correo:</strong> <span id="modal-email" class="text-gray-700"></span></p>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Contenido Completo:</h4>
+                <div id="modal-body" class="p-4 bg-gray-50 rounded-2xl text-xs text-gray-800 leading-relaxed max-h-60 overflow-y-auto whitespace-pre-wrap border border-gray-100"></div>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="button" id="modal-ok-btn" class="bg-rose-600 text-white font-bold text-xs py-2.5 px-6 rounded-xl shadow-md hover:bg-rose-700 transition-colors">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER INSTITUCIONAL -->
+    <footer class="bg-gray-900 text-white py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="bg-rose-600 p-2 rounded-xl text-white">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <span class="text-sm font-extrabold text-rose-500 block leading-tight uppercase tracking-wide">Toshinori Morimoto</span>
+                    <span class="text-[10px] text-gray-400 font-medium block">Centro Privado de Educación Infantil</span>
+                </div>
+            </div>
+            <div class="text-center md:text-right text-xs text-gray-400 space-y-2">
+                <p>Ubicación: Av. de la Independencia, s/n, Baney, Bioko Norte, Guinea Ecuatorial</p>
+                <p>Registro Ministerial: Despacho nº 016-017-146 (Dirección General de Planificación Educativa)</p>
+                <p>Derechos Reservados © <span class="dynamic-current-year">2026</span> Centro Privado Toshinori Morimoto.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+
+    <!-- Script Principal del Panel (Vanilla JS sin frameworks ni dependencias externas) -->
+    <script>
+    (function () {
+        "use strict";
+
+        // ==========================================
+        // 1. FUNCIONES AUXILIARES (Escape HTML y Toasts)
+        // ==========================================
+
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return "";
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        }
+
+        function escapeAttr(str) {
+            if (str === null || str === undefined) return "";
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function sanitizeTel(phone) {
+            if (!phone) return null;
+            const cleaned = String(phone).replace(/[^\d+]/g, "");
+            return cleaned.length > 0 ? cleaned : null;
+        }
+
+        function sanitizeEmail(email) {
+            if (!email) return null;
+            const str = String(email).trim();
+            // Verificación simple de email seguro sin saltos ni comillas
+            if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(str)) {
+                return str;
+            }
+            return null;
+        }
+
+        function showToast(title, message, type) {
+            const container = document.getElementById("toast-container");
+            if (!container) return;
+
+            const t = type || "success";
+            const toast = document.createElement("div");
+            toast.className = "p-4 mb-3 rounded-lg shadow-lg border-l-4 transition-all duration-300 transform translate-y-2 opacity-0 flex items-start gap-3 w-80 md:w-96 pointer-events-auto " + (
+                t === "success" ? "bg-white border-green-500 text-gray-800" :
+                t === "error" ? "bg-white border-red-500 text-gray-800" :
+                "bg-white border-amber-500 text-gray-800"
+            );
+
+            const iconName = t === "success" ? "check-circle" : t === "error" ? "alert-triangle" : "info";
+            const iconColor = t === "success" ? "text-green-500" : t === "error" ? "text-red-500" : "text-amber-500";
+
+            toast.innerHTML = 
+                '<div class="' + iconColor + ' mt-0.5"><i data-lucide="' + iconName + '"></i></div>' +
+                '<div class="flex-1">' +
+                    '<h4 class="text-sm font-bold text-gray-900">' + escapeHtml(title) + '</h4>' +
+                    '<p class="text-xs text-gray-500 mt-1">' + escapeHtml(message) + '</p>' +
+                '</div>';
+
+            container.appendChild(toast);
+            if (typeof lucide !== "undefined") {
+                lucide.createIcons({ attrs: { class: "w-5 h-5" } });
+            }
+
+            setTimeout(function () {
+                toast.classList.remove("opacity-0", "translate-y-2");
+            }, 10);
+
+            setTimeout(function () {
+                toast.classList.add("opacity-0", "translate-y-2");
+                setTimeout(function () {
+                    toast.remove();
+                }, 300);
+            }, 4000);
+        }
+
+        function formatDate(isoStr) {
+            if (!isoStr) return "-";
+            try {
+                const d = new Date(isoStr);
+                if (isNaN(d.getTime())) return escapeHtml(isoStr);
+                return d.toLocaleDateString("es-ES", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                });
+            } catch (e) {
+                return escapeHtml(isoStr);
+            }
+        }
+
+        function formatBirthDate(dateStr) {
+            if (!dateStr) return "-";
+            try {
+                const parts = String(dateStr).split("-");
+                if (parts.length === 3) {
+                    return parts[2] + "/" + parts[1] + "/" + parts[0];
+                }
+                return escapeHtml(dateStr);
+            } catch (e) {
+                return escapeHtml(dateStr);
+            }
+        }
+
+        function formatShift(shift) {
+            const s = String(shift || "").toLowerCase();
+            if (s === "mañana" || s === "manana") {
+                return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-800">Mañana (08:00–13:00)</span>';
+            }
+            if (s === "tarde") {
+                return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-100 text-blue-800">Tarde (13:00–18:00)</span>';
+            }
+            if (s === "completo") {
+                return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">Completo (08:00–18:00)</span>';
+            }
+            return '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-gray-100 text-gray-800">' + escapeHtml(shift || "-") + '</span>';
+        }
+
+        // ==========================================
+        // 2. ESTADO EN MEMORIA Y CACHÉ DE SESIÓN
+        // ==========================================
+        let enrollmentsCache = null;
+        let contactsCache = null;
+        let activeTab = "enrollments";
+        let countdownTimer = null;
+
+        // Elementos del DOM
+        const loginView = document.getElementById("login-view");
+        const adminDashboard = document.getElementById("admin-dashboard");
+        const loginForm = document.getElementById("login-form");
+        const loginPasswordInput = document.getElementById("admin-password");
+        const loginSubmitBtn = document.getElementById("login-submit-btn");
+        const loginErrorMsg = document.getElementById("login-error-msg");
+        const logoutBtn = document.getElementById("logout-btn");
+        const refreshBtn = document.getElementById("refresh-btn");
+        const refreshIcon = document.getElementById("refresh-icon");
+
+        const tabBtnEnrollments = document.getElementById("tab-btn-enrollments");
+        const tabBtnContacts = document.getElementById("tab-btn-contacts");
+        const tabContentEnrollments = document.getElementById("tab-content-enrollments");
+        const tabContentContacts = document.getElementById("tab-content-contacts");
+
+        const badgeEnrollmentsCount = document.getElementById("badge-enrollments-count");
+        const badgeContactsCount = document.getElementById("badge-contacts-count");
+        const enrollmentsCountText = document.getElementById("enrollments-count-text");
+        const contactsCountText = document.getElementById("contacts-count-text");
+
+        const enrollmentsTbody = document.getElementById("enrollments-tbody");
+        const contactsTbody = document.getElementById("contacts-tbody");
+
+        // Modal de Mensaje
+        const messageModal = document.getElementById("message-modal");
+        const modalSenderName = document.getElementById("modal-sender-name");
+        const modalDate = document.getElementById("modal-date");
+        const modalPhone = document.getElementById("modal-phone");
+        const modalEmail = document.getElementById("modal-email");
+        const modalBody = document.getElementById("modal-body");
+        const closeMessageModalBtn = document.getElementById("close-message-modal-btn");
+        const modalOkBtn = document.getElementById("modal-ok-btn");
+
+        // Toggle Visibilidad de Contraseña
+        const togglePasswordBtn = document.getElementById("toggle-password-btn");
+        const togglePasswordIcon = document.getElementById("toggle-password-icon");
+
+        if (togglePasswordBtn && loginPasswordInput) {
+            togglePasswordBtn.addEventListener("click", function () {
+                const isPassword = loginPasswordInput.getAttribute("type") === "password";
+                loginPasswordInput.setAttribute("type", isPassword ? "text" : "password");
+                if (togglePasswordIcon) {
+                    togglePasswordIcon.setAttribute("data-lucide", isPassword ? "eye-off" : "eye");
+                    if (typeof lucide !== "undefined") lucide.createIcons();
+                }
+            });
+        }
+
+        // ==========================================
+        // 3. CONTROL DE VISTAS (LOGIN / DASHBOARD)
+        // ==========================================
+
+        function showLoginView(errorMessage) {
+            loginView.classList.remove("hidden");
+            adminDashboard.classList.add("hidden");
+            if (errorMessage) {
+                loginErrorMsg.textContent = errorMessage;
+                loginErrorMsg.classList.remove("hidden");
+            } else {
+                loginErrorMsg.classList.add("hidden");
+                loginErrorMsg.textContent = "";
+            }
+            if (loginPasswordInput) {
+                loginPasswordInput.value = "";
+            }
+            if (typeof lucide !== "undefined") {
+                lucide.createIcons();
+            }
+        }
+
+        function showDashboardView() {
+            loginView.classList.add("hidden");
+            adminDashboard.classList.remove("hidden");
+            if (typeof lucide !== "undefined") {
+                lucide.createIcons();
+            }
+        }
+
+        function getStoredToken() {
+            const token = sessionStorage.getItem("admin_token");
+            const expiresStr = sessionStorage.getItem("admin_token_expires");
+            if (!token || !expiresStr) return null;
+
+            const expires = parseInt(expiresStr, 10);
+            if (isNaN(expires) || Date.now() >= expires) {
+                sessionStorage.removeItem("admin_token");
+                sessionStorage.removeItem("admin_token_expires");
+                return null;
+            }
+            return token;
+        }
+
+        function handleUnauthorized(message) {
+            sessionStorage.removeItem("admin_token");
+            sessionStorage.removeItem("admin_token_expires");
+            enrollmentsCache = null;
+            contactsCache = null;
+            const msg = message || "Tu sesión ha expirado, vuelve a iniciar sesión.";
+            showLoginView(msg);
+            showToast("Sesión expirada", msg, "error");
+        }
+
+        // ==========================================
+        // 4. ENVÍO DE LOGIN Y MANEJO DE 401/429
+        // ==========================================
+
+        function disableSubmitCountdown(seconds) {
+            if (countdownTimer) clearInterval(countdownTimer);
+            let remaining = seconds;
+            loginSubmitBtn.disabled = true;
+            loginSubmitBtn.classList.add("opacity-60", "cursor-not-allowed");
+
+            const updateText = function () {
+                loginSubmitBtn.innerHTML = '<span>Reintentar en (' + remaining + 's)</span>';
+            };
+            updateText();
+
+            countdownTimer = setInterval(function () {
+                remaining--;
+                if (remaining <= 0) {
+                    clearInterval(countdownTimer);
+                    countdownTimer = null;
+                    loginSubmitBtn.disabled = false;
+                    loginSubmitBtn.classList.remove("opacity-60", "cursor-not-allowed");
+                    loginSubmitBtn.innerHTML = '<span>Entrar al Panel</span><i data-lucide="log-in" class="w-4 h-4"></i>';
+                    if (typeof lucide !== "undefined") lucide.createIcons();
+                } else {
+                    updateText();
+                }
+            }, 1000);
+        }
+
+        loginForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const password = loginPasswordInput.value.trim();
+            if (!password) {
+                loginErrorMsg.textContent = "Por favor ingresa la contraseña.";
+                loginErrorMsg.classList.remove("hidden");
+                return;
+            }
+
+            loginErrorMsg.classList.add("hidden");
+            loginErrorMsg.textContent = "";
+
+            const originalBtnHtml = loginSubmitBtn.innerHTML;
+            loginSubmitBtn.disabled = true;
+            loginSubmitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Verificando...</span>';
+            if (typeof lucide !== "undefined") lucide.createIcons();
+
+            try {
+                // Ruta relativa al mismo origen
+                const res = await fetch("/api/admin/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ password: password })
+                });
+
+                const data = await res.json().catch(function () {
+                    return {};
+                });
+
+                if (res.status === 200 && data.success && data.token) {
+                    // Guardar en sessionStorage (NUNCA en localStorage)
+                    sessionStorage.setItem("admin_token", data.token);
+                    sessionStorage.setItem("admin_token_expires", String(data.expires_at || (Date.now() + 8 * 3600 * 1000)));
+
+                    loginSubmitBtn.disabled = false;
+                    loginSubmitBtn.innerHTML = originalBtnHtml;
+                    loginPasswordInput.value = "";
+
+                    showToast("Acceso concedido", "Bienvenido al panel de administración.", "success");
+                    showDashboardView();
+
+                    // Cargar pestaña activa
+                    switchTab("enrollments");
+                    return;
+                }
+
+                if (res.status === 401) {
+                    loginSubmitBtn.disabled = false;
+                    loginSubmitBtn.innerHTML = originalBtnHtml;
+                    loginErrorMsg.textContent = data.error || "Contraseña incorrecta";
+                    loginErrorMsg.classList.remove("hidden");
+                    if (typeof lucide !== "undefined") lucide.createIcons();
+                    return;
+                }
+
+                if (res.status === 429) {
+                    const msg = data.error || "Demasiados intentos fallidos. Inténtalo de nuevo en 15 minutos.";
+                    loginErrorMsg.textContent = msg;
+                    loginErrorMsg.classList.remove("hidden");
+                    disableSubmitCountdown(30);
+                    return;
+                }
+
+                // Otros códigos de error
+                loginSubmitBtn.disabled = false;
+                loginSubmitBtn.innerHTML = originalBtnHtml;
+                const genericError = data.error || "Error al verificar las credenciales.";
+                loginErrorMsg.textContent = genericError;
+                loginErrorMsg.classList.remove("hidden");
+                showToast("Error de acceso", genericError, "error");
+                if (typeof lucide !== "undefined") lucide.createIcons();
+
+            } catch (err) {
+                loginSubmitBtn.disabled = false;
+                loginSubmitBtn.innerHTML = originalBtnHtml;
+                loginErrorMsg.textContent = "Error de red al conectar con el servidor.";
+                loginErrorMsg.classList.remove("hidden");
+                showToast("Error de red", "No se pudo comunicar con el servidor de la API.", "error");
+                if (typeof lucide !== "undefined") lucide.createIcons();
+            }
+        });
+
+        // Cerrar sesión
+        logoutBtn.addEventListener("click", function () {
+            sessionStorage.removeItem("admin_token");
+            sessionStorage.removeItem("admin_token_expires");
+            enrollmentsCache = null;
+            contactsCache = null;
+            showToast("Sesión cerrada", "Has cerrado sesión correctamente.", "info");
+            showLoginView();
+        });
+
+        // ==========================================
+        // 5. OBTENCIÓN Y RENDERIZADO DE DATOS
+        // ==========================================
+
+        async function fetchEnrollments(forceRefresh) {
+            const token = getStoredToken();
+            if (!token) {
+                handleUnauthorized("Tu sesión ha expirado, vuelve a iniciar sesión.");
+                return;
+            }
+
+            if (!forceRefresh && enrollmentsCache !== null) {
+                renderEnrollments(enrollmentsCache);
+                return;
+            }
+
+            enrollmentsTbody.innerHTML = 
+                '<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500">' +
+                    '<div class="flex flex-col items-center justify-center gap-2">' +
+                        '<i data-lucide="loader-2" class="w-6 h-6 animate-spin text-rose-600"></i>' +
+                        '<span>Cargando pre-inscripciones...</span>' +
+                    '</div>' +
+                '</td></tr>';
+            if (typeof lucide !== "undefined") lucide.createIcons();
+
+            try {
+                // Ruta relativa al mismo origen
+                const res = await fetch("/api/admin/enrollments", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                });
+
+                if (res.status === 401) {
+                    handleUnauthorized("Tu sesión ha expirado, vuelve a iniciar sesión.");
+                    return;
+                }
+
+                if (!res.ok) {
+                    throw new Error("HTTP " + res.status);
+                }
+
+                const data = await res.json();
+                const list = Array.isArray(data.enrollments) ? data.enrollments : [];
+                enrollmentsCache = list;
+                renderEnrollments(list);
+
+            } catch (err) {
+                enrollmentsTbody.innerHTML = 
+                    '<tr><td colspan="7" class="px-6 py-10 text-center text-red-600 font-semibold">' +
+                        '<div class="flex flex-col items-center justify-center gap-2">' +
+                            '<i data-lucide="alert-circle" class="w-6 h-6"></i>' +
+                            '<span>Error al cargar las pre-inscripciones. Inténtalo de nuevo.</span>' +
+                        '</div>' +
+                    '</td></tr>';
+                showToast("Error de carga", "No se pudieron obtener las pre-inscripciones.", "error");
+                if (typeof lucide !== "undefined") lucide.createIcons();
+            }
+        }
+
+        function renderEnrollments(list) {
+            const count = list.length;
+            badgeEnrollmentsCount.textContent = String(count);
+            enrollmentsCountText.textContent = count === 1 ? "1 pre-inscripción registrada" : count + " pre-inscripciones registradas";
+
+            if (count === 0) {
+                enrollmentsTbody.innerHTML = 
+                    '<tr>' +
+                        '<td colspan="7" class="px-6 py-12 text-center text-gray-500 text-sm">' +
+                            '<div class="flex flex-col items-center justify-center gap-2">' +
+                                '<i data-lucide="inbox" class="w-8 h-8 text-gray-400"></i>' +
+                                '<p class="font-medium text-gray-600">No hay pre-inscripciones registradas todavía.</p>' +
+                                '<p class="text-xs text-gray-400">Las solicitudes enviadas desde la web aparecerán aquí en tiempo real.</p>' +
+                            '</div>' +
+                        '</td>' +
+                    '</tr>';
+                if (typeof lucide !== "undefined") lucide.createIcons();
+                return;
+            }
+
+            const rowsHtml = list.map(function (item) {
+                const safePhone = sanitizeTel(item.tutor_phone);
+                const phoneHtml = safePhone ? 
+                    '<a href="tel:' + escapeAttr(safePhone) + '" class="font-semibold text-rose-600 hover:underline flex items-center gap-1"><i data-lucide="phone" class="w-3 h-3"></i>' + escapeHtml(item.tutor_phone) + '</a>' :
+                    (item.tutor_phone ? escapeHtml(item.tutor_phone) : '-');
+
+                const safeEmail = sanitizeEmail(item.tutor_email);
+                const emailHtml = safeEmail ? 
+                    '<a href="mailto:' + escapeAttr(safeEmail) + '" class="text-gray-600 hover:text-rose-600 hover:underline flex items-center gap-1"><i data-lucide="mail" class="w-3 h-3"></i>' + escapeHtml(item.tutor_email) + '</a>' :
+                    (item.tutor_email ? escapeHtml(item.tutor_email) : '<span class="text-gray-400 italic">No proporcionado</span>');
+
+                return '<tr class="hover:bg-gray-50 transition-colors">' +
+                    '<td class="px-6 py-4 whitespace-nowrap text-gray-500 font-medium">' + formatDate(item.created_at) + '</td>' +
+                    '<td class="px-6 py-4 whitespace-nowrap">' +
+                        '<div class="font-bold text-gray-900 text-sm flex items-center gap-2">' +
+                            '<span class="w-7 h-7 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center text-xs font-black">' +
+                                escapeHtml((item.student_name || "?").charAt(0).toUpperCase()) +
+                            '</span>' +
+                            '<span>' + escapeHtml(item.student_name) + '</span>' +
+                        '</div>' +
+                    '</td>' +
+                    '<td class="px-6 py-4 whitespace-nowrap text-gray-600 font-medium">' + formatBirthDate(item.birth_date) + '</td>' +
+                    '<td class="px-6 py-4 whitespace-nowrap text-gray-900 font-semibold">' + escapeHtml(item.tutor_name) + '</td>' +
+                    '<td class="px-6 py-4 whitespace-nowrap">' + phoneHtml + '</td>' +
+                    '<td class="px-6 py-4 whitespace-nowrap text-xs">' + emailHtml + '</td>' +
+                    '<td class="px-6 py-4 whitespace-nowrap">' + formatShift(item.shift) + '</td>' +
+                '</tr>';
+            }).join("");
+
+            enrollmentsTbody.innerHTML = rowsHtml;
+            if (typeof lucide !== "undefined") lucide.createIcons();
+        }
+
+        async function fetchContacts(forceRefresh) {
+            const token = getStoredToken();
+            if (!token) {
+                handleUnauthorized("Tu sesión ha expirado, vuelve a iniciar sesión.");
+                return;
+            }
+
+            if (!forceRefresh && contactsCache !== null) {
+                renderContacts(contactsCache);
+                return;
+            }
+
+            contactsTbody.innerHTML = 
+                '<tr><td colspan="5" class="px-6 py-12 text-center text-gray-500">' +
+                    '<div class="flex flex-col items-center justify-center gap-2">' +
+                        '<i data-lucide="loader-2" class="w-6 h-6 animate-spin text-rose-600"></i>' +
+                        '<span>Cargando mensajes de contacto...</span>' +
+                    '</div>' +
+                '</td></tr>';
+            if (typeof lucide !== "undefined") lucide.createIcons();
+
+            try {
+                // Ruta relativa al mismo origen
+                const res = await fetch("/api/admin/contacts", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                });
+
+                if (res.status === 401) {
+                    handleUnauthorized("Tu sesión ha expirado, vuelve a iniciar sesión.");
+                    return;
+                }
+
+                if (!res.ok) {
+                    throw new Error("HTTP " + res.status);
+                }
+
+                const data = await res.json();
+                const list = Array.isArray(data.contacts) ? data.contacts : [];
+                contactsCache = list;
+                renderContacts(list);
+
+            } catch (err) {
+                contactsTbody.innerHTML = 
+                    '<tr><td colspan="5" class="px-6 py-10 text-center text-red-600 font-semibold">' +
+                        '<div class="flex flex-col items-center justify-center gap-2">' +
+                            '<i data-lucide="alert-circle" class="w-6 h-6"></i>' +
+                            '<span>Error al cargar los mensajes. Inténtalo de nuevo.</span>' +
+                        '</div>' +
+                    '</td></tr>';
+                showToast("Error de carga", "No se pudieron obtener los mensajes de contacto.", "error");
+                if (typeof lucide !== "undefined") lucide.createIcons();
+            }
+        }
+
+        function renderContacts(list) {
+            const count = list.length;
+            badgeContactsCount.textContent = String(count);
+            contactsCountText.textContent = count === 1 ? "1 mensaje recibido" : count + " mensajes recibidos";
+
+            if (count === 0) {
+                contactsTbody.innerHTML = 
+                    '<tr>' +
+                        '<td colspan="5" class="px-6 py-12 text-center text-gray-500 text-sm">' +
+                            '<div class="flex flex-col items-center justify-center gap-2">' +
+                                '<i data-lucide="inbox" class="w-8 h-8 text-gray-400"></i>' +
+                                '<p class="font-medium text-gray-600">No hay mensajes de contacto registrados todavía.</p>' +
+                                '<p class="text-xs text-gray-400">Las consultas recibidas a través de la web se mostrarán en esta lista.</p>' +
+                            '</div>' +
+                        '</td>' +
+                    '</tr>';
+                if (typeof lucide !== "undefined") lucide.createIcons();
+                return;
+            }
+
+            const rowsHtml = list.map(function (item, index) {
+                const safePhone = sanitizeTel(item.phone);
+                const phoneHtml = safePhone ? 
+                    '<a href="tel:' + escapeAttr(safePhone) + '" class="font-semibold text-rose-600 hover:underline flex items-center gap-1"><i data-lucide="phone" class="w-3 h-3"></i>' + escapeHtml(item.phone) + '</a>' :
+                    (item.phone ? escapeHtml(item.phone) : '-');
+
+                const safeEmail = sanitizeEmail(item.email);
+                const emailHtml = safeEmail ? 
+                    '<a href="mailto:' + escapeAttr(safeEmail) + '" class="text-gray-600 hover:text-rose-600 hover:underline flex items-center gap-1"><i data-lucide="mail" class="w-3 h-3"></i>' + escapeHtml(item.email) + '</a>' :
+                    (item.email ? escapeHtml(item.email) : '<span class="text-gray-400 italic">No proporcionado</span>');
+
+                // Truncar a 80 caracteres con "…" y atributo title con el texto completo
+                const rawMsg = String(item.message || "");
+                const isLong = rawMsg.length > 80;
+                const truncatedText = isLong ? rawMsg.slice(0, 80) + "…" : rawMsg;
+                const escapedFullTitle = escapeAttr(rawMsg);
+
+                return '<tr class="hover:bg-gray-50 transition-colors">' +
+                    '<td class="px-6 py-4 whitespace-nowrap text-gray-500 font-medium">' + formatDate(item.created_at) + '</td>' +
+                    '<td class="px-6 py-4 whitespace-nowrap font-bold text-gray-900">' + escapeHtml(item.name) + '</td>' +
+                    '<td class="px-6 py-4 whitespace-nowrap">' + phoneHtml + '</td>' +
+                    '<td class="px-6 py-4 whitespace-nowrap text-xs">' + emailHtml + '</td>' +
+                    '<td class="px-6 py-4">' +
+                        '<div class="flex items-center justify-between gap-2">' +
+                            '<span title="' + escapedFullTitle + '" class="cursor-help text-gray-700 font-medium leading-relaxed block">' +
+                                escapeHtml(truncatedText) +
+                            '</span>' +
+                            '<button type="button" data-index="' + index + '" class="view-contact-detail-btn flex-shrink-0 text-rose-600 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-colors" aria-label="Ver mensaje completo">' +
+                                'Ver' +
+                            '</button>' +
+                        '</div>' +
+                    '</td>' +
+                '</tr>';
+            }).join("");
+
+            contactsTbody.innerHTML = rowsHtml;
+            if (typeof lucide !== "undefined") lucide.createIcons();
+
+            // Vincular botones para ver mensaje completo en modal
+            document.querySelectorAll(".view-contact-detail-btn").forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    const idx = parseInt(btn.getAttribute("data-index"), 10);
+                    const item = list[idx];
+                    if (!item) return;
+
+                    modalSenderName.textContent = item.name || "Remitente Anónimo";
+                    modalDate.textContent = formatDate(item.created_at);
+                    modalPhone.textContent = item.phone || "No especificado";
+                    modalEmail.textContent = item.email || "No especificado";
+                    modalBody.textContent = item.message || "(Mensaje vacío)";
+
+                    messageModal.classList.remove("hidden");
+                    document.body.classList.add("overflow-hidden");
+                    if (typeof lucide !== "undefined") lucide.createIcons();
+                });
+            });
+        }
+
+        // Cierre del modal de mensajes
+        function closeMessageModal() {
+            messageModal.classList.add("hidden");
+            document.body.classList.remove("overflow-hidden");
+        }
+
+        if (closeMessageModalBtn) closeMessageModalBtn.addEventListener("click", closeMessageModal);
+        if (modalOkBtn) modalOkBtn.addEventListener("click", closeMessageModal);
+        if (messageModal) {
+            messageModal.addEventListener("click", function (e) {
+                if (e.target === messageModal) closeMessageModal();
+            });
+        }
+        window.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && !messageModal.classList.contains("hidden")) {
+                closeMessageModal();
+            }
+        });
+
+        // ==========================================
+        // 6. CONTROL DE PESTAÑAS (TABS)
+        // ==========================================
+
+        function switchTab(targetTab) {
+            activeTab = targetTab;
+
+            if (targetTab === "enrollments") {
+                // Botón activo
+                tabBtnEnrollments.classList.remove("bg-white", "text-gray-700", "border", "border-gray-200");
+                tabBtnEnrollments.classList.add("bg-rose-600", "text-white", "shadow-sm");
+                badgeEnrollmentsCount.classList.remove("bg-gray-100", "text-gray-700");
+                badgeEnrollmentsCount.classList.add("bg-white/20", "text-white");
+
+                // Botón inactivo
+                tabBtnContacts.classList.remove("bg-rose-600", "text-white", "shadow-sm");
+                tabBtnContacts.classList.add("bg-white", "text-gray-700", "border", "border-gray-200");
+                badgeContactsCount.classList.remove("bg-white/20", "text-white");
+                badgeContactsCount.classList.add("bg-gray-100", "text-gray-700");
+
+                // Contenidos
+                tabContentEnrollments.classList.remove("hidden");
+                tabContentContacts.classList.add("hidden");
+
+                // Si ya está cacheado no vuelve a hacer fetch (regla 5.b)
+                if (enrollmentsCache !== null) {
+                    renderEnrollments(enrollmentsCache);
+                } else {
+                    fetchEnrollments();
+                }
+            } else if (targetTab === "contacts") {
+                // Botón activo
+                tabBtnContacts.classList.remove("bg-white", "text-gray-700", "border", "border-gray-200");
+                tabBtnContacts.classList.add("bg-rose-600", "text-white", "shadow-sm");
+                badgeContactsCount.classList.remove("bg-gray-100", "text-gray-700");
+                badgeContactsCount.classList.add("bg-white/20", "text-white");
+
+                // Botón inactivo
+                tabBtnEnrollments.classList.remove("bg-rose-600", "text-white", "shadow-sm");
+                tabBtnEnrollments.classList.add("bg-white", "text-gray-700", "border", "border-gray-200");
+                badgeEnrollmentsCount.classList.remove("bg-white/20", "text-white");
+                badgeEnrollmentsCount.classList.add("bg-gray-100", "text-gray-700");
+
+                // Contenidos
+                tabContentContacts.classList.remove("hidden");
+                tabContentEnrollments.classList.add("hidden");
+
+                // Si ya está cacheado no vuelve a hacer fetch la primera vez (regla 5.b)
+                if (contactsCache !== null) {
+                    renderContacts(contactsCache);
+                } else {
+                    fetchContacts();
+                }
+            }
+
+            if (typeof lucide !== "undefined") lucide.createIcons();
+        }
+
+        tabBtnEnrollments.addEventListener("click", function () {
+            switchTab("enrollments");
+        });
+
+        tabBtnContacts.addEventListener("click", function () {
+            switchTab("contacts");
+        });
+
+        // Botón Actualizar Datos
+        refreshBtn.addEventListener("click", async function () {
+            if (refreshIcon) refreshIcon.classList.add("animate-spin");
+            showToast("Actualizando datos", "Consultando la base de datos...", "info");
+
+            if (activeTab === "enrollments") {
+                await fetchEnrollments(true);
+            } else {
+                await fetchContacts(true);
+            }
+
+            setTimeout(function () {
+                if (refreshIcon) refreshIcon.classList.remove("animate-spin");
+                showToast("Datos actualizados", "La lista se encuentra al día.", "success");
+            }, 500);
+        });
+
+        // ==========================================
+        // 7. INICIALIZACIÓN AL CARGAR LA PÁGINA
+        // ==========================================
+
+        // Menú móvil institucional
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const menuIcon = document.getElementById("menu-icon");
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener("click", function () {
+                mobileMenu.classList.toggle("hidden");
+                const isOpen = !mobileMenu.classList.contains("hidden");
+                mobileMenuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+                mobileMenuBtn.setAttribute("aria-label", isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación");
+                if (menuIcon) {
+                    menuIcon.setAttribute("data-lucide", isOpen ? "x" : "menu");
+                    if (typeof lucide !== "undefined") lucide.createIcons();
+                }
+            });
+        }
+
+        // Actualizar año en footer y ciclos escolares
+        const currentYear = new Date().getFullYear();
+        document.querySelectorAll(".dynamic-current-year").forEach(function (el) {
+            el.textContent = String(currentYear);
+        });
+        const currentMonth = new Date().getMonth();
+        const startYear = currentMonth >= 5 ? currentYear : currentYear - 1;
+        const endYear = startYear + 1;
+        document.querySelectorAll(".dynamic-cycle").forEach(function (el) {
+            el.textContent = startYear + "-" + endYear;
+        });
+
+        // Inicializar iconos iniciales
+        if (typeof lucide !== "undefined") {
+            lucide.createIcons();
+        }
+
+        // Comprobación de token en sessionStorage (Punto 2)
+        const validToken = getStoredToken();
+        if (validToken) {
+            showDashboardView();
+            switchTab("enrollments");
+        } else {
+            showLoginView();
+        }
+
+    })();
+    </script>
+</body>
+</html>

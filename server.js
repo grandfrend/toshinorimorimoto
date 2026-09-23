@@ -22,8 +22,52 @@ app.use(express.urlencoded({ extended: true }));
 
 // In-memory data storage (simulates Cloudflare D1 / SQLite database)
 const db = {
-  enrollments: [],
-  contacts: [],
+  enrollments: [
+    {
+      id: 1,
+      student_name: "Mateo Nguema Oyono",
+      birth_date: "2022-04-15",
+      tutor_name: "Elena Oyono Mba",
+      tutor_phone: "+240 222 123 456",
+      tutor_email: "elena.oyono@ejemplo.com",
+      shift: "mañana",
+      documents_submitted: 0,
+      status: "pendiente",
+      created_at: new Date(Date.now() - 3600000 * 24).toISOString()
+    },
+    {
+      id: 2,
+      student_name: "Aitana Mbengono Mangue",
+      birth_date: "2021-11-20",
+      tutor_name: "Vicente Mangue Nsue",
+      tutor_phone: "+240 222 654 321",
+      tutor_email: "vicente.mangue@ejemplo.com",
+      shift: "completo",
+      documents_submitted: 1,
+      status: "confirmado",
+      created_at: new Date(Date.now() - 3600000 * 12).toISOString()
+    }
+  ],
+  contacts: [
+    {
+      id: 1,
+      name: "Carlos Ondo Mikue",
+      phone: "+240 222 987 654",
+      email: "carlos.ondo@ejemplo.com",
+      message: "Buenas tardes, quisiera consultar sobre los requisitos para el aula de 2 años en el turno de la tarde y las fechas límite de matriculación.",
+      status: "nuevo",
+      created_at: new Date(Date.now() - 3600000 * 6).toISOString()
+    },
+    {
+      id: 2,
+      name: "Esperanza Bindang",
+      phone: "+240 222 456 789",
+      email: "esperanza.bindang@ejemplo.com",
+      message: "Hola, me gustaría saber si disponen de servicio de comedor escolar en el turno completo.",
+      status: "nuevo",
+      created_at: new Date(Date.now() - 3600000 * 2).toISOString()
+    }
+  ],
   parent_attendance: []
 };
 
@@ -154,6 +198,81 @@ app.get('/api/attendance', (req, res) => {
     success: true,
     total: db.parent_attendance.length,
     attendance: db.parent_attendance
+  });
+});
+
+// 4. Panel de Administración
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const adminTokens = new Map(); // token -> expires_at
+let loginAttempts = [];
+
+// POST /api/admin/login
+app.post('/api/admin/login', (req, res) => {
+  const ip = req.ip || req.connection?.remoteAddress || '127.0.0.1';
+  const now = Date.now();
+
+  // Limpiar intentos de más de 15 minutos
+  loginAttempts = loginAttempts.filter(a => now - a.time < 15 * 60 * 1000);
+  const recentFails = loginAttempts.filter(a => a.ip === ip && !a.success);
+
+  if (recentFails.length >= 5) {
+    return res.status(429).json({
+      error: 'Demasiados intentos fallidos. Inténtalo de nuevo en 15 minutos.'
+    });
+  }
+
+  const { password } = req.body || {};
+  const valid = Boolean(password && (password === ADMIN_PASSWORD || (process.env.ADMIN_PASSWORD && password === process.env.ADMIN_PASSWORD)));
+
+  loginAttempts.push({ ip, success: valid, time: now });
+
+  if (!valid) {
+    return res.status(401).json({ error: 'Contraseña incorrecta' });
+  }
+
+  const token = 'tok_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+  const expires_at = now + 8 * 60 * 60 * 1000;
+  adminTokens.set(token, expires_at);
+
+  return res.json({
+    success: true,
+    token,
+    expires_at
+  });
+});
+
+function verifyAdminToken(req) {
+  const auth = req.headers['authorization'] || '';
+  const match = auth.match(/^Bearer (.+)$/);
+  if (!match) return false;
+  const token = match[1];
+  const expiresAt = adminTokens.get(token);
+  if (!expiresAt || expiresAt < Date.now()) {
+    adminTokens.delete(token);
+    return false;
+  }
+  return true;
+}
+
+// GET /api/admin/enrollments
+app.get('/api/admin/enrollments', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({ error: 'No autorizado' });
+  }
+  return res.json({
+    success: true,
+    enrollments: [...db.enrollments].reverse()
+  });
+});
+
+// GET /api/admin/contacts
+app.get('/api/admin/contacts', (req, res) => {
+  if (!verifyAdminToken(req)) {
+    return res.status(401).json({ error: 'No autorizado' });
+  }
+  return res.json({
+    success: true,
+    contacts: [...db.contacts].reverse()
   });
 });
 

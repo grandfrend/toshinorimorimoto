@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "build": "node -e \"console.log('Build completed successfully')\"",
+    "build": "node -e \"import('fs').then(fs => { fs.mkdirSync('public/admin', { recursive: true }); fs.copyFileSync('admin/index.html', 'public/admin/index.html'); console.log('Build completed successfully: admin assets synced'); })\"",
     "lint": "node -e \"console.log('Linting passed')\""
   },
   "dependencies": {
